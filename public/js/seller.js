@@ -1,9 +1,11 @@
-function editProduct(id, name, description, price, quantity, categoryID){
-    const idField = document.querySelector('#idProduct')
-    const nameField = document.querySelector('#nameProduct')
+function editProduct(e, id, name, description, price, quantity, categoryID) {
+    e.stopPropagation()
+
+    const idField = document.querySelector('#productID')
+    const nameField = document.querySelector('#name')
     const desField = document.querySelector('#description')
     const priceField = document.querySelector('#price')
-    const quantityField = document.querySelector('#quantity')
+    const quantityField = document.querySelector('#stockQuantity')
     const categoryIDField = document.querySelector('#categoryID')
 
     if (id != null && description != null && name != null && price != null && quantity != null && categoryID != null) {
@@ -16,12 +18,12 @@ function editProduct(id, name, description, price, quantity, categoryID){
     }
 }
 
-function updateProduct(shopID) {
+function updateProduct(e, shopID) {
     const idField = document.querySelector('#productID')
     const nameField = document.querySelector('#name')
     const desField = document.querySelector('#description')
     const priceField = document.querySelector('#price')
-    const quantityField = document.querySelector('#quantity')
+    const quantityField = document.querySelector('#stockQuantity')
     const categoryIDField = document.querySelector('#categoryID')
     
     
@@ -43,7 +45,9 @@ function updateProduct(shopID) {
     })    
 }
 
-function removeProduct(productID) {
+function removeProduct(e, productID) {
+    e.stopPropagation()
+
     fetch('/controller/seller.php', {
         method: 'DELETE',
         headers: { "Content-Type": 'application/json' },
@@ -56,7 +60,7 @@ function removeProduct(productID) {
     })
 }
 
-function addProduct(shopID) {
+function addProduct(e, shopID) {
     const nameField = document.querySelector('#newName')
     const descriptionField = document.querySelector('#newDescription')
     const priceField = document.querySelector('#newPrice')
@@ -88,4 +92,12 @@ function addProduct(shopID) {
     .then(data => {
         window.location.href = `/views/seller.php?shopID=${shopID}`
     })   
+}
+
+function searchProduct(e) {
+    products.forEach((product) => {
+        const name = product.querySelector('.name').innerHTML
+        const formatedName = name.toLocaleLowerCase().trim().replace(' ', '')
+        product.style.display = formatedName.includes(e.target.value) ? 'block' : 'none'
+    })
 }

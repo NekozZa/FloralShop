@@ -85,7 +85,7 @@
                 <div class="h-100 bg-light p-30">
                     <h3><?= $product['Name'] ?></h3>
                     <div class="d-flex align-items-center mb-3">
-                        <?php include './partials/rating.php' ?>
+                        <?php include './partials/product_rating.php' ?>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">$<?= $product['Price'] ?></h3>
                     <p class="mb-4"><?= $product['Description'] ?></p>
@@ -231,21 +231,7 @@
                         <?php if (mysqli_num_rows($randomProductsByCategory) > 0) { ?>
                             <?php while ($product = mysqli_fetch_assoc($randomProductsByCategory)) { ?>
                                 <?php if ($product['ProductID'] != $productID) { ?>
-                                    <div class="product-item bg-light">
-                                        <div class="product-img position-relative overflow-hidden" style="height: 30vh">
-                                            <img class="img-fluid w-100" src="../public/img/product-img-<?= $product['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="object-fit:contain">
-                                            <?php include './partials/product_action.php' ?>
-                                        </div>
-                                        <div class="text-center py-4">
-                                            <a class="h6 text-decoration-none text-truncate" href=""><?= $product['Name'] ?></a>
-                                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                                <h5><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] + 20 ?></del></h6>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                                <?php include './partials/rating.php' ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php include './partials/product.php' ?>
                                 <?php } ?>
                             <?php } ?>
                         <?php } ?>

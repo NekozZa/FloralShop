@@ -7,38 +7,46 @@
     header('Location: index.php');
   }
 
-  if (isset($_POST['username']) && isset($_POST['password']) 
-      && isset($_POST['role']) && isset($_POST['shopName'])
-      && isset($_POST['address'])) {
+  if (isset($_POST['username']) && isset($_POST['password']) &&
+      isset($_POST['role']) && isset($_POST['address'])) {
       
       $address = $_POST['address'];
       $role = $_POST['role'];
       $username = $_POST['username'];
       $password = $_POST['password'];
-      $shopName = $_POST['shopName'];
-      $shopDescription = $_POST['shopDescription'];
 
-      $sql = "
-          INSERT INTO account (Address, Username, Password, Role)
-          VALUES ('$address', '$username', '$password', '$role')
-      ";
+      $userID = addNewAccount($address, $username, $password, $role);
 
-      mysqli_query($conn, $sql);
-
-      if ($role === 'Seller') {
-        $userID = mysqli_insert_id($conn);
-
-        $sql = "
-          INSERT INTO shop (UserID, Name, Description)
-          VALUES ($userID, '$shopName', '$shopDescription')
-        ";
+      if (isset($_POST['shopName']) && $role === 'Seller') {
+        $shopName = $_POST['shopName'];
+        $shopDescription = $_POST['shopDescription'];
+        addNewShop($shopName, $shopDescription);
       }
 
-      mysqli_query($conn, $sql);
       $_SESSION['UserID'] = $userID;
       $_SESSION['Role'] = $role;
 
       header('Location: index.php');
+  }
+
+  function addNewAccount($address, $username, $password, $role) {
+    $sql = "
+        INSERT INTO account (Address, Username, Password, Role)
+        VALUES ('$address', '$username', '$password', '$role')
+    ";
+
+    mysqli_query($conn, $sql);
+    $userID = mysqli_insert_id($conn);
+    return $userID;
+  }
+
+  function addNewShop($shopName, $shopAddress, $shopDescription) {
+    $sql = "
+      INSERT INTO shop (UserID, Name, Description, Address)
+      VALUES ($userID, '$shopName', '$shopDescription', '$shopAddress')
+    ";
+
+    mysqli_query($conn, $sql);
   }
 ?>
 
@@ -53,8 +61,10 @@
   <body class="d-flex align-items-center" style="height: 100vh;">
     <div class="container w-50 h-auto border rounded shadow d-flex justify-content-center">
       <div class="row w-100 h-auto">
-          <div class="col-12 h-10 p-5">
-              <form class="needs-validation" method="post" novalidate>
+          <div class="col-12 h-10 p-5" style="position: relative">
+              <a class="w-100 h-100" href="login.php"><i class="bi bi-arrow-left text-primary p-3" style="position: absolute; top: 0; left: 0; cursor: pointer"></i></a>
+              
+              <form class="needs-validation mt-3" method="post" novalidate>
                 <div class="form-group mb-2">
                   <label for="">Address*</label>  
                   <input type="text" class="form-control" name="address" required>
@@ -95,10 +105,10 @@
                 
 
                 <div class ="form-group mt-5 shop-info" style="display: none">
-                  <div class="row">
+                  <div class="row mb-2">
                     <div class="col-md-6 col-12">
                       <label for="">Shop Name*</label>
-                      <input type="text" class="form-control" name="shopName" required>
+                      <input type="text" class="form-control" name="shopName">
                       <div class="invalid-feedback">Can't be empty</div>
                     </div>
 
@@ -108,6 +118,13 @@
                     </div>
                   </div>
                   
+                  <div class="row">
+                      <div class="col-12">
+                        <label for="">Shop Address*</label>
+                        <input type="text" class="form-control" name="shopAddress">
+                        <div class="invalid-feedback">Can't be empty</div>
+                      </div>
+                  </div>
                 </div>
 
                 <button class="btn btn-outline-primary w-100 mt-5" type="submit">Register</button>

@@ -11,16 +11,18 @@ totals.forEach((total) => {
     sum = sum + amount
 })
 
-subtotal.innerHTML = `$${sum}`
-total.innerHTML = `$${sum}`
+subtotal.innerHTML = `$${sum.toFixed(2)}`
+total.innerHTML = `$${sum.toFixed(2)}`
 
 const shippingTypeBtns = document.querySelectorAll("input[name='shipping']")
 const shippingField = document.querySelector('.shipping-expense')
+const popupContainer = document.querySelector('.pop-up-container')
+const popup = document.querySelector('.pop-up')
 
 function setShippingPrice(price) {
     shippingPrice = price
     shippingField.innerHTML = `$${shippingPrice}`
-    total.innerHTML =`$${sum + shippingPrice}`
+    total.innerHTML =`$${(sum + shippingPrice).toFixed(2)}`
 }
 
 async function placeOrder () {
@@ -32,19 +34,23 @@ async function placeOrder () {
         throw Error("Fields are empty")
     }
 
-    const res = await fetch('/controller/order.php', {
-        method: "POST",
-        headers: { "Content-Type": 'application/json' },
-        body: JSON.stringify({
-            address: address.value, 
-            totalAmount: sum + shippingPrice,
-            paymentMethod: paymentMethod.value,
-            shippingType: shippingType.value
-        })
-    })
 
-    const data = await res.json()
-    window.location.href = '/views/index.php'
+
+    const [orderCreated] = await Promise.all([
+        createOrder(address.value, sum + shippingPrice, paymentMethod.value, shippingType.value),
+        // deleteCartItems()
+    ])
+
+    if (!orderCreated) throw new Error('Can not create order')
+    // if (!cartCleared) throw new Error('Can not clear cart items')
+
+    popupContainer.style.display = 'block'
+    popup.classList.add('animation')
+
+    popup.addEventListener('animationend', () => {
+        popupContainer.style.display = 'none'
+        // window.location.href = '/views/index.php'
+    })
 }
 
 function areFieldsEmpty(fields) {
@@ -52,7 +58,7 @@ function areFieldsEmpty(fields) {
     let isError = false
     
     fields.forEach((field, i) => {
-        if (field == null || field == '') {
+        if (field == null || field.value == '') {
             fieldHolders[i].classList.add("border-danger") 
             isError = true
         } else {
@@ -62,3 +68,32 @@ function areFieldsEmpty(fields) {
 
     return isError
 }
+
+async function createOrder(address, total, paymentMethod, shippingType) {
+    const res = await fetch('/controller/order.php', {
+        method: "POST",
+        headers: { "Content-Type": 'application/json' },
+        body: JSON.stringify({
+            address: address, 
+            totalAmount: total,
+            paymentMethod: paymentMethod,
+            shippingType: shippingType
+        })
+    })
+
+    const data = await res.json()
+    console.log(data.coord);
+
+    return data.message == 'Successful'
+}
+
+async function deleteCartItems() {
+    const res = await fetch('/controller/cart.php', {
+        method: "DELETE"
+    })
+    
+    const data = await res.json()
+
+    return data.message == 'Successful'
+}
+

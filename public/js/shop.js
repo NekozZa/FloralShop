@@ -1,5 +1,6 @@
 const products = document.querySelectorAll(".product")
 const priceFilters = document.querySelectorAll("input[id*='price-']")
+let limit = 10
 
 priceFilters.forEach((filter) => {
     filter.onclick = () => {
@@ -26,20 +27,22 @@ function updateProducts(range) {
     })
 }
 
-async function addItem(productID) {
-    const res = await fetch('/controller/cart.php', {
-        method: 'POST',
-        headers: {
-            "Content-Type": 'application/json'
-        },
-        body: JSON.stringify({productID: productID})
-    })
+function setLimit(limit) {
+    limit = limit
 
-    const data = await res.json()
-    
-    if (data.action == 'Insert') {
-        document.querySelectorAll('.item-count').forEach((itemCount) => {
-            itemCount.innerHTML = `${Number(itemCount.innerHTML) + 1}`
-        })
+    products.forEach((product, index) => {
+        product.style.display = index < limit ? 'block' : 'none'
+    })
+}
+
+
+function setSorting(sorting) {
+    const params = new URLSearchParams(document.location.search)
+    const curSorting = params.get('sorting')
+
+    if (curSorting == null || curSorting != sorting) {
+        window.location.href = `/views/shop.php?sorting=${sorting}`
+    } else {
+        window.location.href = `/views/shop.php`
     }
 }

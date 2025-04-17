@@ -24,6 +24,32 @@
         return mysqli_query($conn, $sql);
     }
 
+    function getRandomProductsOutsideBound ($conn, $limit, $bound) {
+        $sql = "
+            SELECT product.ProductID, product.Name, product.Price, AVG(Rating) as AvgRating, COUNT(ReviewID) as CountReviews
+            FROM product
+            LEFT JOIN productreview on product.ProductID = productreview.ProductID
+            WHERE product.ProductID NOT IN $bound
+            GROUP BY product.ProductID, product.Name, product.Price
+            ORDER BY RAND() LIMIT $limit
+        ";
+
+        return mysqli_query($conn, $sql);
+    }
+
+    function getProductsInBound($conn, $limit, $bound) {
+        $sql = "
+            SELECT product.ProductID, product.Name, product.Price, AVG(Rating) as AvgRating, COUNT(ReviewID) as CountReviews
+            FROM product
+            LEFT JOIN productreview on product.ProductID = productreview.ProductID
+            WHERE product.ProductID IN $bound
+            GROUP BY product.ProductID, product.Name, product.Price
+            ORDER BY RAND() LIMIT $limit
+        ";
+
+        return mysqli_query($conn, $sql);
+    }
+
     function getRandomProductsByCategory ($conn, $categoryID, $limit) {
         $sql = "
             SELECT product.ProductID, product.Name, product.Price, AVG(Rating) as AvgRating, COUNT(ReviewID) as CountReviews

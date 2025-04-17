@@ -27,6 +27,7 @@
     <!-- Libraries Stylesheet -->
     <link href="/public/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/public/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/public/css/style.css" rel="stylesheet">
@@ -55,6 +56,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Breadcrumb End -->
 
 
@@ -197,6 +199,7 @@
                     class="btn btn-block btn-primary font-weight-bold py-3 place-order-btn" 
                     style="display: <?= mysqli_num_rows($res) > 0 ? 'block' : 'none' ?>" 
                     onclick="placeOrder()"
+                    
                 >
                         Place Order
                 </button>
@@ -204,6 +207,71 @@
         </div>
     </div>
     <!-- Checkout End -->
+
+    <style>
+        .pop-up-container {
+            width: 100vw;
+            height: 100%;
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            background-color: rgba(0, 0, 0, 0.3);
+
+            z-index: 500;
+
+            transition: display 0.5s ease
+        }
+
+        .pop-up {
+            box-sizing: content-box;
+
+            width: 15vw;
+            height: 15vh;
+            padding: 0.5rem;
+
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            border: 1px dashed white;
+            border-radius: 12px;
+
+            font-size: 2rem
+        }
+
+        .animation {
+            animation: fade 2s ease-in-out forwards;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <div class="pop-up-container" style='display: none'>
+        <div class="pop-up" style='opacity: 1'>
+            <i class="bi bi-check-circle-fill text-white"></i>
+            <h6 class="text-white">Succesful</h6>
+        </div>
+    </div>
 
 
     <!-- Footer Start -->
@@ -219,6 +287,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/public/lib/easing/easing.min.js"></script>
     <script src="/public/lib/owlcarousel/owl.carousel.min.js"></script>
 

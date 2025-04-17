@@ -33,7 +33,7 @@ async function deleteItem(id) {
     
     const data = await res.json()
     document.querySelector(`.product-${id}`).remove()
-    updateCheckout()
+    updateOrderTotal()
 }
 
 function updateItemTotal(id) {

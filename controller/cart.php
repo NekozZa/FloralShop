@@ -21,7 +21,7 @@
 
             $sql = "
                 SELECT Quantity FROM cartitem
-                WHERE ProductID=$productID
+                WHERE ProductID=$productID and CartID=$cartID
             ";
 
             $res = mysqli_query($conn, $sql);
@@ -51,13 +51,19 @@
         $offset = $data['offset'];
         $cartID = getCart($conn, $_SESSION['UserID']);
         updateCartItem($conn, $cartID, $productID, $offset);
-        echo json_encode(['message' => 'Test']);
+        echo json_encode(['message' => 'Successful']);
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($data['productID'])) {
         $productID = $data['productID'];
         $cartID = getCart($conn, $_SESSION['UserID']);
         deleteCartItem($conn, $cartID, $productID);
+        echo json_encode(['message' => 'Successful']);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        $cartID = getCart($conn, $_SESSION['UserID']);
+        deleteCartItems($conn, $cartID);
         echo json_encode(['message' => 'Successful']);
     }
 ?>
@@ -106,4 +112,14 @@
 
         mysqli_query($conn, $sql);
     }
+
+    function deleteCartItems($conn, $cartID) {
+        $sql= "
+            DELETE FROM cartitem
+            WHERE CartID=$cartID
+        ";
+
+        mysqli_query($conn, $sql);
+    }
+    
 ?>

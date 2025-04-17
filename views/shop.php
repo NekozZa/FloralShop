@@ -5,14 +5,23 @@
 
     include '../controller/product.php';
 
+    $limit = 20;
+    $res = null;
+
     if (isset($_GET['categoryID'])) {
-        $categoryID = $_GET['categoryID'];
-        $products = getRandomProductsByCategory ($conn, $categoryID, 20);
+        $res = getRandomProductsByCategory ($conn, $_GET['categoryID'], $limit);
     } else if (isset($_GET['search'])) { 
-        $search = $_GET['search'];
-        $products = getProductsBySearchBar($conn, $search, 20);
+        $res = getProductsBySearchBar($conn, $_GET['search'], $limit);
+    } else if (isset($_GET['sorting'])) {
+        $res = getProductsOrderedByField ($conn, $_GET['sorting'], 'DESC', $limit);
     } else {
-        $products = getRandomProducts($conn, 20);
+        $res = getRandomProducts($conn, $limit);
+    }
+
+    $products = [];
+
+    while ($row = mysqli_fetch_assoc($res)) {
+        $products[] = $row;
     }
 ?>
 
@@ -102,6 +111,32 @@
                     </form>
                 </div>
                 <!-- Price End -->
+
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Locations</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-1" value="0-100">
+                            <label class="custom-control-label" for="price-1">Ho Chi Minh City</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-2" value="100-200">
+                            <label class="custom-control-label" for="price-2">Ha Noi</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-3" value="200-300">
+                            <label class="custom-control-label" for="price-3">Da Nang</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-4" value="300-400">
+                            <label class="custom-control-label" for="price-4">Vung Tau</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="price-5" value="400-500">
+                            <label class="custom-control-label" for="price-5">Hue</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- Shop Sidebar End -->
 
@@ -112,24 +147,26 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div>
-                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
-                                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Latest</a>
-                                        <a class="dropdown-item" href="#">Popularity</a>
-                                        <a class="dropdown-item" href="#">Best Rating</a>
-                                    </div>
-                                </div>
-                                <div class="btn-group ml-2">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">10</a>
-                                        <a class="dropdown-item" href="#">20</a>
-                                        <a class="dropdown-item" href="#">30</a>
+                                        <a 
+                                            class="dropdown-item <?= (isset($_GET['sorting']) && $_GET['sorting'] == 'CountReviews') ? 'text-primary' : '' ?>" 
+                                            onclick="setSorting('CountReviews')" 
+                                            style="cursor: pointer"
+                                        >
+                                            Popularity
+                                        </a>
+
+                                        <a 
+                                            class="dropdown-item <?= (isset($_GET['sorting']) && $_GET['sorting'] == 'AvgRating') ? 'text-primary' : '' ?>" 
+                                            onclick="setSorting('AvgRating')" 
+                                            style="cursor: pointer"
+                                        >
+                                            Best Rating
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -137,38 +174,13 @@
                     </div>
                     
                     
-                    <?php if (mysqli_num_rows($products) > 0) { ?>
-                        <?php while ($product = mysqli_fetch_assoc($products)) { ?>
+                    <?php if (count($products) > 0) { ?>
+                        <?php foreach($products as $product) { ?>
                             <div class="col-lg-4 col-md-6 col-sm-6 pb-1 product">
-                                <div class="product-item bg-light mb-4">
-                                    <div class="product-img position-relative overflow-hidden" style="height: 35vh">
-                                        <img class="img-fluid w-100" src="../public/img/product-img-<?= $product['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="object-fit: contain">
-                                        <?php include './partials/product_action.php' ?>
-                                    </div>
-                                    <div class="text-center py-4">
-                                        <a class="h6 text-decoration-none text-truncate" href=""><?= $product['Name'] ?></a>
-                                        <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5 class="price"><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] + 20?></del></h6>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-center mb-1">
-                                            <?php include './partials/rating.php' ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php include './partials/product.php' ?>
                             </div>
                         <?php } ?>
                     <?php } ?>
-                    <div class="col-12">
-                        <nav>
-                          <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                          </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
             <!-- Shop Product End -->

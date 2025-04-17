@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
 
-<div class="container-fluid bg-dark mb-30">
-    <div class="row px-xl-5">
+
+<div class="container-fluid bg-dark mb-30" style="position: sticky; top: 0px; z-index: 300">
+    <div class="row px-xl-5" style="position: relative">
         <div class="col-lg-3 d-none d-lg-block">
             <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
                 <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
@@ -62,12 +63,12 @@
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a href="order.php" class="btn px-0 ml-3">
                             <i class="ri-truck-fill text-primary" style="font-size: 22px"></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle item-count" style="padding-bottom: 2px;"><?= isset($itemCount) ? $itemCount : 0 ?></span>                            
+                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"><?= isset($orderCount) ? $orderCount : 0 ?></span>                            
                         </a>
 
                         <a href="cart.php" class="btn px-0 ml-3">
-                            <i class="fas fa-shopping-cart text-primary"></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle item-count" style="padding-bottom: 2px;"><?= isset($itemCount) ? $itemCount : 0 ?></span>                            
+                            <i class="fas fa-shopping-cart text-primary" ></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle item-count" style="padding-bottom: 2px;"><?= isset($itemCount) ? $itemCount : 0 ?></span>      
                         </a>
                     </div>
                 </div>
@@ -75,3 +76,5 @@
         </div>
     </div>
 </div>
+
+

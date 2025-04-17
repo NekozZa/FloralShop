@@ -1,6 +1,7 @@
-<?php include './database.php' ?>
+<?php
+    include './database.php';
+    include './mapbox.php';
 
-<?php 
     session_start();
     header('Content-Type: application/json');
 
@@ -11,10 +12,18 @@
         if (isset($data['address']) && isset($data['totalAmount']) &&
             isset($data['paymentMethod']) && isset($data['shippingType'])) {
 
+            $userAddressCoordinates = getAddressCoordinates($data['address']);
+
             createNewOrder($conn, $data['address'], $data['totalAmount'], $data['paymentMethod'], $data['shippingType']);
             $orderID = mysqli_insert_id($conn);
             $orderItems = getOrderItems($conn);
-            addOrderItems($conn, $orderID, $orderItems);
+            addOrderItems($conn, $orderID, $orderItems, $userAddressCoordinates);
+
+            echo json_encode([
+                'message' => 'Successful',
+                'coord' => $userAddressCoordinates 
+
+            ]);
         }
     }
 ?>
@@ -45,18 +54,36 @@
         return mysqli_query($conn, $sql);
     }
 
-    function addOrderItems($conn, $orderID, $orderItems) {
+    function addOrderItems($conn, $orderID, $orderItems, $userAddressCoordinates) {
         while ($orderItem = mysqli_fetch_assoc($orderItems)) {
             $price = $orderItem['Price'];
             $quantity = $orderItem['Quantity'];
             $productID = $orderItem['ProductID'];
+            $shopAddress = getShopAddressByProductID($conn, $productID); 
 
+            $shopAddressCoordinates = getAddressCoordinates($shopAddress);
+            $route = "$shopAddressCoordinates;$userAddressCoordinates";
+            
             $sql = "
-                INSERT INTO orderitem (OrderID, ProductID, Price, Quantity)
-                VALUES ($orderID, $productID, $price, $quantity)
+                INSERT INTO orderitem (OrderID, ProductID, Price, Quantity, Route)
+                VALUES ($orderID, $productID, $price, $quantity, '$route')
             ";
 
             mysqli_query($conn, $sql);
         }
+    }
+
+    function getShopAddressByProductID($conn, $productID) {
+        $sql = "
+            SELECT Address
+            FROM product
+            INNER JOIN shop ON product.ShopID = shop.ShopID 
+            WHERE ProductID = $productID 
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_assoc($res);
+
+        return $data['Address'];
     }
 ?>

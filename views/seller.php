@@ -143,7 +143,6 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
-                <!-- Price Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -170,6 +169,32 @@
                     </form>
                 </div>
                 <!-- Price End -->
+
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Locations</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-1" value="0-100">
+                            <label class="custom-control-label" for="price-1">Ho Chi Minh City</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-2" value="100-200">
+                            <label class="custom-control-label" for="price-2">Ha Noi</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-3" value="200-300">
+                            <label class="custom-control-label" for="price-3">Da Nang</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-4" value="300-400">
+                            <label class="custom-control-label" for="price-4">Vung Tau</label>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="price-5" value="400-500">
+                            <label class="custom-control-label" for="price-5">Hue</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- Shop Sidebar End -->
 
@@ -185,7 +210,7 @@
                                         <span class="input-group-text bg-light text-primary" style="cursor: pointer;">
                                             <i class="fa fa-search"></i>
                                         </span>
-                                        <input type="text" class="form-control" name="search" placeholder="Search for products">
+                                        <input type="text" class="form-control" oninput="searchProduct(event)" name="search" placeholder="Search for products">
                                     </div>
                                 </form>
                             </div>
@@ -206,37 +231,7 @@
                     <?php if (mysqli_num_rows($products) > 0) { ?>
                         <?php while ($product = mysqli_fetch_assoc($products)) { ?>
                             <div class="col-lg-4 col-md-6 col-sm-6 pb-1 product product-<?= $product['ProductID'] ?>">
-                                <div class="product-item bg-light mb-4">
-                                    <div class="product-img position-relative overflow-hidden" style="height: 30vh">
-                                        <img class="img-fluid w-100" src="/public/img/product-img-<?= $product['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="object-fit: cover">
-                                        <div class="product-action">
-                                            <a 
-                                                class="btn btn-outline-dark btn-square inspect-item-btn" 
-                                                data-bs-toggle="modal"  
-                                                data-bs-target="#editProduct"
-                                                onclick="editProduct(<?= $product['ProductID'] ?>, 
-                                                                    '<?= $product['Name'] ?>', 
-                                                                    '<?= $product['Description'] ?>', 
-                                                                    <?= $product['Price'] ?>,
-                                                                    <?= $product['StockQuantity'] ?>,
-                                                                    <?= $product['CategoryID'] ?>)"
-                                            >
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <a class="btn btn-outline-dark btn-square" href="detail.php?productID=<?= $product['ProductID'] ?>"><i class="fa fa-search"></i></a>
-                                            <a class="btn btn-outline-dark btn-square delete-btn" onclick="removeProduct(<?= $product['ProductID'] ?>)"><i class="bi bi-x"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="text-center py-4">
-                                        <a class="h6 text-decoration-none text-truncate" href=""><?= $product['Name'] ?></a>
-                                        <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5 class="price"><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] + 20?></del></h6>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-center mb-1">
-                                            <?php include './partials/rating.php' ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php include './partials/product.php' ?>
                             </div>
                         <?php } ?>
                     <?php } ?>
@@ -415,6 +410,7 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+    <script src="../public/js/shop.js?v=<?php echo time(); ?>"></script>
     <script src="/public/js/seller.js?v=<?php echo time(); ?>"></script>
     <script src="/public/js/dropZone.js?v=<?php echo time(); ?>"></script>
     <!-- JavaScript Libraries -->

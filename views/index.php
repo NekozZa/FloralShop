@@ -28,6 +28,7 @@
     <!-- Libraries Stylesheet -->
     <link href="/public/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/public/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/public/css/style.css" rel="stylesheet">
@@ -148,7 +149,12 @@
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
         <div class="row px-xl-5 pb-3">
             <?php 
-                $sql = "SELECT * FROM category";
+                $sql = "
+                    SELECT category.Name, category.CategoryID, COUNT(ProductID) as ProductCount
+                    FROM category
+                    INNER JOIN product ON product.CategoryID = category.CategoryID
+                    GROUP BY category.Name, category.CategoryID
+                ";
                 $res = mysqli_query($conn, $sql);
             ?>
 
@@ -162,7 +168,7 @@
                                 </div>
                                 <div class="flex-fill pl-3">
                                     <h6><?= $row['Name'] ?></h6>
-                                    <small class="text-body">100 Products</small>
+                                    <small class="text-body"><?= $row['ProductCount'] ?> Products</small>
                                 </div>
                             </div>
                         </a>
@@ -185,21 +191,7 @@
             <?php if (mysqli_num_rows($products) > 0) { ?>
                 <?php while ($product = mysqli_fetch_assoc($products)) { ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <div class="product-item bg-light mb-4">
-                            <div class="product-img position-relative overflow-hidden" style="height: 30vh">
-                                <img class="img-fluid w-100" src="/public/img/product-img-<?= $product['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="object-fit:contain">
-                                <?php include './partials/product_action.php' ?>
-                            </div>
-                            <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href=""><?= $product['Name'] ?></a>
-                                <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] ?></del></h6>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <?php include './partials/rating.php' ?>
-                                </div>
-                            </div>
-                        </div>
+                        <?php include './partials/product.php' ?>
                     </div>
                 <?php } ?>
             <?php } ?>
@@ -247,21 +239,7 @@
             <?php if (mysqli_num_rows($products) > 0) { ?>
                 <?php while ($product = mysqli_fetch_assoc($products)) { ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <div class="product-item bg-light mb-4">
-                            <div class="product-img position-relative overflow-hidden" style="height: 30vh">
-                                <img class="img-fluid w-100" src="../public/img/product-img-<?= $product['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="object-fit: contain">
-                                <?php include './partials/product_action.php' ?>
-                            </div>
-                            <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href=""><?= $product['Name'] ?></a>
-                                <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] + 50?></del></h6>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <?php include './partials/rating.php' ?>
-                                </div>
-                            </div>
-                        </div>
+                        <?php include './partials/product.php' ?>
                     </div>
                 <?php } ?>
             <?php } ?>

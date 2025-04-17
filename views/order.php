@@ -84,6 +84,7 @@
                                         product.ProductID,
                                         product.Name as ProductName,
                                         product.Price,
+                                        orderitem.OrderItemID,
                                         orderitem.Quantity,
                                         orderitem.Price as Total,
                                         shop.Name as ShopName
@@ -100,7 +101,7 @@
                         ?>
                         <?php if (mysqli_num_rows($res) > 0) { ?>
                             <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-                                <tr class="product-<?= $row['ProductID'] ?>" onclick="viewDetail(<?= $row['ProductID'] ?>)" style="cursor: pointer;">
+                                <tr class="product-<?= $row['ProductID'] ?>" onclick="viewOrderDetail(<?= $row['OrderItemID'] ?>)" style="cursor: pointer;">
                                     <td class="d-flex justify-content-start align-items-center"><img src="/public/img/product-img-<?= $row['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="width: 50px;"><?= $row['ProductName'] ?></td>
                                     <td class="align-middle price"><?= $row['Price'] ?></td>
                                     <td class="align-middle"><?= $row['Quantity'] ?></td>
@@ -127,8 +128,8 @@
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
     <script>
-        function viewDetail(productID) {
-            window.location.href = `/views/detail.php?productID=${productID}`
+        function viewOrderDetail(orderItemID) {
+            window.location.href = `/views/delivery.php?orderItemID=${orderItemID}`
         }
 
     </script>
