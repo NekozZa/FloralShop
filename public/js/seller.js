@@ -66,16 +66,7 @@ function addProduct(e, shopID) {
     const priceField = document.querySelector('#newPrice')
     const stockQuantityField = document.querySelector('#newStockQuantity')
     const categoryIDField = document.querySelector('#newCategoryID')
-
-    console.log({
-        name: nameField.value,
-        description: descriptionField.value,
-        price: priceField.value,
-        stockQuantity: stockQuantityField.value,
-        categoryID: categoryIDField.value,
-        shopID: shopID
-    })
-
+    
     fetch('/controller/seller.php', {
         method: 'POST',
         headers: { "Content-Type": 'application/json' },
@@ -95,9 +86,11 @@ function addProduct(e, shopID) {
 }
 
 function searchProduct(e) {
+    const input = e.target.value.toLocaleLowerCase()
+
     products.forEach((product) => {
         const name = product.querySelector('.name').innerHTML
         const formatedName = name.toLocaleLowerCase().trim().replace(' ', '')
-        product.style.display = formatedName.includes(e.target.value) ? 'block' : 'none'
+        product.style.display = formatedName.includes(input) ? 'block' : 'none'
     })
 }

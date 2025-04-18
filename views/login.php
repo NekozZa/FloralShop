@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
   <body class="d-flex align-items-center" style="height: 100vh;">
-    <div class="container w-50 h-auto border rounded shadow d-flex justify-content-center">
+    <div class="container w-50 h-auto border rounded shadow d-flex justify-content-center" style="max-width: 400px">
       <div class="row w-100 h-auto">
           <div class="col-12 h-10 p-5">
               <form method="post">

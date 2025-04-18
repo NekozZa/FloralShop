@@ -11,14 +11,20 @@
     $orderItemID = $_GET['orderItemID'];
 
     $sql = "
-        SELECT Route
+        SELECT Route, shop.Address as Start, `order`.Address as End
         FROM orderitem
+        INNER JOIN `order` ON `order`.OrderID = orderitem.OrderID
+        INNER JOIN product ON orderitem.ProductID = product.ProductID
+        INNER JOIN shop ON product.ShopID = shop.ShopID
         WHERE orderItemID = $orderItemID
+
     ";
 
     $res = mysqli_query($conn, $sql);
     $data = mysqli_fetch_assoc($res);
     $route = $data['Route'];
+    $start = $data['Start'];
+    $end = $data['End'];
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +50,7 @@
     <!-- Libraries Stylesheet -->
     <link href="/public/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/public/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     
     <!-- Customized Bootstrap Stylesheet -->
@@ -56,6 +63,54 @@
 
     <style>
         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+        .bootstrap-marker {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            color: #D8D8D8;
+            position: relative;
+            padding: 10px;
+        }
+        
+        li:before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #D8D8D8;
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-40%);
+        }
+
+        li:not(:last-child):after {
+            content: '';
+            width: 2px;
+            height: 100%;
+            background: #D8D8D8;
+            position: absolute;
+            left: -8px;
+            top: 50%;
+        }
+
+        .pass:not(:last-child):after,
+        .pass:before {
+            background: #3d464d;
+        }
+
+        .pass {
+            color: #3d464d;
+        }
     </style>
 </head>
 
@@ -76,12 +131,19 @@
         <!-- Products Start -->
         <div class="container pt-5 pb-3" >
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4 border rounded p-5 h-auto">
+                    <h6 class="text-dark"><i class="bi bi-box-seam-fill"></i> </i>Order Delivery Tracker</h6>
+                    <ul>
+                        <li class="pass"><?= $start ?></li>
 
+                        <li>...</li>
+
+                        <li><?= $end ?></li>
+                    </ul>
                 </div>
 
-                <div class="col-md-6"style="position: relative; height: 50vh">
-                    <div id="map"></div>
+                <div class="col-md-8"style="position: relative; height: 50vh">
+                    <div class="border" id="map"></div>
                 </div>
             </div>
             
@@ -101,7 +163,6 @@
             mapboxgl.accessToken = '<?= ACCESS_TOKEN ?>'
             const map = new mapboxgl.Map({
                 container: 'map',
-                // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
                 style: 'mapbox://styles/mapbox/streets-v12',
                 center: [-79.4512, 43.6568],
                 zoom: 13
@@ -113,16 +174,29 @@
             const start = stations[0].split(',').map(Number)
             const end = stations[1].split(',').map(Number)
 
-            new mapboxgl.Marker({ color: 'green' }).setLngLat(start).addTo(map);
-            new mapboxgl.Marker({ color: 'red' }).setLngLat(end).addTo(map);
+            const startMarker = document.createElement('div')
+            startMarker.className = 'bootstrap-marker text-danger'
+            startMarker.innerHTML = '<i class="bi bi-geo-alt-fill"></i>'
+
+            const endMarker = document.createElement('div')
+            endMarker.className = 'bootstrap-marker text-danger'
+            endMarker.innerHTML = '<i class="bi bi-flag-fill"></i>'
+
+            new mapboxgl.Marker(startMarker).setLngLat(start).addTo(map)
+            new mapboxgl.Marker(endMarker).setLngLat(end).addTo(map)
 
             async function getRoute(start, end) {
                 const res = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/${route}?access_token=${mapboxgl.accessToken}&steps=true&geometries=geojson`)
                 const data = await res.json();
                 const directions = data.routes[0].geometry.coordinates;
 
-                map.setCenter(directions[directions.length / 2]); // Set the map center to the first coordinate of the route
-                map.setZoom(13);
+                const bounds = new mapboxgl.LngLatBounds()
+                bounds.extend(start)
+                bounds.extend(end)
+
+                map.fitBounds(bounds, {
+                    padding: 50
+                })
 
                 map.addSource('route', {
                     type: 'geojson',

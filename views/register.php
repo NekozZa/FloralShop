@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
   <body class="d-flex align-items-center" style="height: 100vh;">
-    <div class="container w-50 h-auto border rounded shadow d-flex justify-content-center">
+    <div class="container w-50 h-auto border rounded shadow d-flex justify-content-center" style="max-width: 450px">
       <div class="row w-100 h-auto">
           <div class="col-12 h-10 p-5" style="position: relative">
               <a class="w-100 h-100" href="login.php"><i class="bi bi-arrow-left text-primary p-3" style="position: absolute; top: 0; left: 0; cursor: pointer"></i></a>
