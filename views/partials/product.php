@@ -52,7 +52,7 @@
                 headers: {
                     "Content-Type": 'application/json'
                 },
-                body: JSON.stringify({productID: productID})
+                body: JSON.stringify({productID: productID, quantity: 1})
             })
 
             const data = await res.json()

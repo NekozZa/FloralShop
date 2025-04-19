@@ -1,8 +1,9 @@
-<?php include '../controller/database.php' ?>
-
 <?php
     session_start();
-    include '../controller/product.php';
+    include '../controller/database.php';
+
+    $featureProducts = getProductsOrderedByField ($conn, 'AvgRating', 'DESC', 8);
+    $todayDeals = getRandomProducts($conn, 12);
 ?>
 
 <!DOCTYPE html>
@@ -148,32 +149,24 @@
     <div class="container-fluid pt-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
         <div class="row px-xl-5 pb-3">
-            <?php 
-                $sql = "
-                    SELECT category.Name, category.CategoryID, COUNT(ProductID) as ProductCount
-                    FROM category
-                    INNER JOIN product ON product.CategoryID = category.CategoryID
-                    GROUP BY category.Name, category.CategoryID
-                ";
-                $res = mysqli_query($conn, $sql);
-            ?>
-
-            <?php if (mysqli_num_rows($res) > 0) { ?>
-                <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <a class="text-decoration-none" href="shop.php?categoryID=<?= $row['CategoryID'] ?>" style="cursor: pointer">
-                            <div class="cat-item d-flex align-items-center mb-4">
-                                <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                                    <img class="img-fluid" src="/public/img/cat-1.jpg" alt="">
-                                </div>
-                                <div class="flex-fill pl-3">
-                                    <h6><?= $row['Name'] ?></h6>
-                                    <small class="text-body"><?= $row['ProductCount'] ?> Products</small>
-                                </div>
+            <?php foreach($categories as $category) { ?>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <a 
+                        class="text-decoration-none" 
+                        href="shop.php?categoryID=<?= $category['CategoryID'] ?>" 
+                        style="cursor: pointer"
+                    >
+                        <div class="cat-item d-flex align-items-center mb-4">
+                            <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                                <img class="img-fluid" src="/public/img/cat-1.jpg" alt="">
                             </div>
-                        </a>
-                    </div>
-                <?php } ?>
+                            <div class="flex-fill pl-3">
+                                <h6><?= $category['Name'] ?></h6>
+                                <small class="text-body"><?= $category['ProductCount'] ?> Products</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             <?php } ?>
         </div>
     </div>
@@ -184,16 +177,10 @@
     <div class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
         <div class="row px-xl-5 d-flex">
-            <?php 
-                $products = getProductsOrderedByField ($conn, 'AvgRating', 'DESC', 8);
-            ?>
-
-            <?php if (mysqli_num_rows($products) > 0) { ?>
-                <?php while ($product = mysqli_fetch_assoc($products)) { ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <?php include './partials/product.php' ?>
-                    </div>
-                <?php } ?>
+            <?php foreach($featureProducts as $product) { ?>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <?php include './partials/product.php' ?>
+                </div>
             <?php } ?>
         </div>
     </div>
@@ -232,16 +219,10 @@
     <div class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Today's Deals</span></h2>
         <div class="row px-xl-5">
-            <?php 
-               $products = getRandomProducts($conn, 12);
-            ?>
-
-            <?php if (mysqli_num_rows($products) > 0) { ?>
-                <?php while ($product = mysqli_fetch_assoc($products)) { ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                        <?php include './partials/product.php' ?>
-                    </div>
-                <?php } ?>
+            <?php foreach($todayDeals as $product) { ?>
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <?php include './partials/product.php' ?>
+                </div>
             <?php } ?>
         </div>
     </div>

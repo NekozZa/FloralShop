@@ -1,7 +1,21 @@
-<?php include '../controller/database.php' ?>
-
 <?php 
     session_start();
+    include '../controller/database.php';
+
+    $cartItems = isset($_SESSION['UserID']) ? getCartItems($conn) : [];
+    $userAddress = isset($_SESSION['UserID']) ? getUserAddress($conn, $_SESSION['UserID']) : "";
+
+    function getUserAddress($conn, $userID) {
+        $sql = "
+            SELECT Address
+            FROM account
+            WHERE UserID = $userID
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_assoc($res);
+        return $data['Address'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +84,7 @@
                         <div class="col-md-12 form-group">
                             <div class="bg-light p-3 rounded border field">
                                 <label>Address</label>
-                                <input class="form-control address" type="text" placeholder="123 Street">
+                                <input class="form-control address" type="text" placeholder="Your address" value="<?= $userAddress ?>"> 
                             </div>
                             
                         </div>
@@ -148,29 +162,11 @@
                 <div class="bg-light p-30 mb-3">
                     <div class="border-bottom">
                         <h6 class="mb-3">Products</h6>
-                        <?php 
-                            if (isset($_SESSION['UserID'])) {
-                                $id = $_SESSION['UserID'];
-
-                                $sql = "
-                                    SELECT 
-                                        product.Name,  
-                                        product.Price * cartItem.quantity as 'Total'
-                                    FROM account
-                                    INNER JOIN cart ON account.UserID = cart.UserID
-                                    INNER JOIN cartitem ON cart.CartID = cartitem.CartID
-                                    INNER JOIN product ON product.ProductID = cartitem.ProductID
-                                    WHERE account.UserID = $id
-                                ";
-
-                                $res = mysqli_query($conn, $sql);
-                            }
-                        ?>
-                        <?php if (mysqli_num_rows($res) > 0) { ?>
-                            <?php while ($row = mysqli_fetch_assoc($res)) { ?>
+                        <?php if (count($cartItems) > 0) { ?>
+                            <?php foreach ($cartItems as $cartItem) { ?>
                                 <div class="d-flex justify-content-between">
-                                    <p><?= $row['Name'] ?></p>
-                                    <p class="total"><?= $row['Total'] ?></p>
+                                    <p><?= $cartItem['Name'] ?></p>
+                                    <p class="total"><?= $cartItem['Total'] ?></p>
                                 </div>
                             <?php } ?>
                         <?php } else {?>
@@ -197,7 +193,7 @@
 
                 <button 
                     class="btn btn-block btn-primary font-weight-bold py-3 place-order-btn" 
-                    style="display: <?= mysqli_num_rows($res) > 0 ? 'block' : 'none' ?>" 
+                    style="display: <?= count($cartItem) > 0 ? 'block' : 'none' ?>" 
                     onclick="placeOrder()"
                     
                 >

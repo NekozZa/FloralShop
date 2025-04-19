@@ -1,5 +1,8 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+<?php 
+    $categories = getCategories($conn);
+?>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
 
 <div class="container-fluid bg-dark mb-30" style="position: sticky; top: 0px; z-index: 300">
     <div class="row px-xl-5" style="position: relative">
@@ -10,15 +13,13 @@
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                 <div class="navbar-nav w-100">
-                    <?php 
-                        $sql = "SELECT * FROM category";
-                        $res = mysqli_query($conn, $sql);
-                    ?>
-
-                    <?php if (mysqli_num_rows($res) > 0) { ?>
-                        <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-                            <a href="/views/shop.php?categoryID=<?= $row['CategoryID'] ?>" class="nav-item nav-link"><?= $row['Name'] ?></a>
-                        <?php } ?>
+                    <?php foreach($categories as $category) { ?>
+                        <a 
+                            href="/views/shop.php?categoryID=<?= $category['CategoryID'] ?>" 
+                            class="nav-item nav-link"
+                        >
+                            <?= $category['Name'] ?>
+                        </a>
                     <?php } ?>
                 </div>
             </nav>

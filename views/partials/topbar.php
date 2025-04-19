@@ -1,3 +1,10 @@
+<?php 
+    if (isset($_SESSION['UserID'])) {
+        $itemCount = getCartCount($conn);
+        $orderCount = getOrderCount($conn);
+    }
+?>
+
 <div class="container-fluid">
     <div class="row bg-secondary py-1 px-xl-5">
         <div class="col-lg-12 text-center text-lg-right">
@@ -16,40 +23,22 @@
             </div>
             <div class="d-inline-flex align-items-center d-block d-lg-none">
                 <a href="cart.php" class="btn px-0 ml-2">
-                    
-                    <?php 
-                        if (isset($_SESSION['UserID'])) {
-                            $id = $_SESSION['UserID'];
-
-                            $sql = "
-                                SELECT COUNT(cartitem.CartItemID) as ItemCount
-                                FROM account
-                                INNER JOIN cart ON account.UserID = cart.UserID
-                                INNER JOIN cartitem ON cart.CartID = cartitem.CartID
-                                WHERE account.UserID = $id
-                            ";
-
-                            $res = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($res);
-                            $itemCount = $row['ItemCount'];
-
-                            $sql = "
-                                SELECT COUNT(OrderItemID) as OrderCount
-                                FROM `order`
-                                INNER JOIN orderitem ON order.OrderID = orderitem.OrderID
-                                WHERE order.UserID = $id 
-                            ";
-
-                            $res = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($res);
-                            $orderCount = $row['OrderCount'];
-                        }
-                    ?>
                     <i class="ri-truck-fill text-dark ml-3" style="font-size: 22px"></i>
-                    <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;"><?= isset($orderCount) ? $orderCount : 0 ?></span>
+
+                    <span 
+                        class="badge text-dark border border-dark rounded-circle" 
+                        style="padding-bottom: 2px;"
+                    >
+                        <?= isset($_SESSION['UserID']) ? $orderCount : 0 ?>
+                    </span>
 
                     <i class="fas fa-shopping-cart text-dark"></i>
-                    <span class="badge text-dark border border-dark rounded-circle item-count" style="padding-bottom: 2px;"><?= isset($itemCount) ? $itemCount : 0 ?></span>
+                    <span 
+                        class="badge text-dark border border-dark rounded-circle item-count" 
+                        style="padding-bottom: 2px;"
+                    >
+                        <?= isset($_SESSION['UserID']) ? $itemCount : 0 ?>
+                    </span>
                 </a>
             </div>
         </div>

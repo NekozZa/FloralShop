@@ -1,27 +1,18 @@
-<?php include '../controller/database.php' ?>
-
 <?php  
     session_start();
-
-    include '../controller/product.php';
+    include '../controller/database.php';
 
     $limit = 20;
-    $res = null;
+    $products = null;
 
     if (isset($_GET['categoryID'])) {
-        $res = getRandomProductsByCategory ($conn, $_GET['categoryID'], $limit);
+        $products = getRandomProductsByCategory ($conn, $_GET['categoryID'], $limit);
     } else if (isset($_GET['search'])) { 
-        $res = getProductsBySearchBar($conn, $_GET['search'], $limit);
+        $products = getProductsBySearchBar($conn, $_GET['search'], $limit);
     } else if (isset($_GET['sorting'])) {
-        $res = getProductsOrderedByField ($conn, $_GET['sorting'], 'DESC', $limit);
+        $products = getProductsOrderedByField ($conn, $_GET['sorting'], 'DESC', $limit);
     } else {
-        $res = getRandomProducts($conn, $limit);
-    }
-
-    $products = [];
-
-    while ($row = mysqli_fetch_assoc($res)) {
-        $products[] = $row;
+        $products = getRandomProducts($conn, $limit);
     }
 ?>
 

@@ -7,8 +7,12 @@
     $raw = file_get_contents("php://input");
     $data = json_decode($raw, true);   
     
-    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($data['productID'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+        isset($data['productID']) &&
+        isset($data['quantity'])) {
+
         $productID = $data['productID'];
+        $quantity = $data['quantity'];
         $userID = $_SESSION['UserID'];
 
         $sql = "SELECT CartID FROM cart WHERE UserID = $userID";
@@ -27,16 +31,16 @@
             $res = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($res) > 0) {
-                updateCartItem($conn, $cartID, $productID, 1);
+                updateCartItem($conn, $cartID, $productID, $quantity);
                 $action = 'Update';
 
             } else {
-                addNewCartItem($conn, $cartID, $productID);
+                addNewCartItem($conn, $cartID, $productID, $quantity);
             }
         } else {
             createCart($conn, $userID);
             $cartID = getCart($conn, $userID);
-            addNewCartItem($conn, $cartID, $productID);
+            addNewCartItem($conn, $cartID, $productID, $quantity);
         }
 
         $response = [
@@ -54,17 +58,19 @@
         echo json_encode(['message' => 'Successful']);
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($data['productID'])) {
-        $productID = $data['productID'];
-        $cartID = getCart($conn, $_SESSION['UserID']);
-        deleteCartItem($conn, $cartID, $productID);
-        echo json_encode(['message' => 'Successful']);
-    }
-
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         $cartID = getCart($conn, $_SESSION['UserID']);
-        deleteCartItems($conn, $cartID);
-        echo json_encode(['message' => 'Successful']);
+        $message = '';
+
+        if (isset($data['productID'])) {
+            deleteCartItem($conn, $cartID, $data['productID']);
+            $message = 'Delete cartitem with id: ' . $data['productID'];
+        } else {
+            deleteCartItems($conn, $cartID);
+            $message = 'Delete all cartitems';
+        }
+        
+        echo json_encode(['message' => $message]);
     }
 ?>
 
@@ -79,16 +85,19 @@
     }
 
     function getCart($conn, $userID) {
-        $sql = "SELECT CartID FROM cart WHERE UserID=$userID";
+        $sql = "
+            SELECT CartID FROM cart WHERE UserID=$userID
+        ";
+
         $res = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($res);
         return $row['CartID'];
     }
 
-    function addNewCartItem($conn, $cartID, $productID) {
+    function addNewCartItem($conn, $cartID, $productID, $quantity) {
         $sql = "
             INSERT INTO cartitem (CartID, ProductID, Quantity)
-            VALUES ($cartID, $productID, 1)
+            VALUES ($cartID, $productID, $quantity)
         ";
 
         mysqli_query($conn, $sql);

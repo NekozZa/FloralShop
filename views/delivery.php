@@ -160,19 +160,19 @@
         <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
         
         <script>
-            mapboxgl.accessToken = '<?= ACCESS_TOKEN ?>'
-            const map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v12',
-                center: [-79.4512, 43.6568],
-                zoom: 13
-            });
-
-
             const route = '<?= $route ?>'
             const stations = route.split(';')
             const start = stations[0].split(',').map(Number)
             const end = stations[1].split(',').map(Number)
+
+            mapboxgl.accessToken = '<?= ACCESS_TOKEN ?>'
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: start,
+                zoom: 13
+            });
+
 
             const startMarker = document.createElement('div')
             startMarker.className = 'bootstrap-marker text-danger'

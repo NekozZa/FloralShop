@@ -94,3 +94,14 @@ function searchProduct(e) {
         product.style.display = formatedName.includes(input) ? 'block' : 'none'
     })
 }
+
+function setSorting(shopID, sorting) {
+    const params = new URLSearchParams(document.location.search)
+    const curSorting = params.get('sorting')
+
+    if (curSorting == null || curSorting != sorting) {
+        window.location.href = `/views/seller.php?shopID=${shopID}&sorting=${sorting}`
+    } else {
+        window.location.href = `/views/seller.php?shopID=${shopID}`
+    }
+}

@@ -1,7 +1,8 @@
-<?php include '../controller/database.php' ?>
-
 <?php 
     session_start();
+    include '../controller/database.php';
+
+    $cartItems = isset($_SESSION['UserID']) ? getCartItems($conn) : [];
 ?>
 
 <!DOCTYPE html>
@@ -73,61 +74,59 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        <?php 
-                            if (isset($_SESSION['UserID'])) {
-                                $id = $_SESSION['UserID'];
-
-                                $sql = "
-                                    SELECT 
-                                        product.ProductID,
-                                        product.Name, 
-                                        product.Price, 
-                                        cartItem.Quantity, 
-                                        product.Price * cartItem.quantity as 'Total'
-                                    FROM account
-                                    INNER JOIN cart ON account.UserID = cart.UserID
-                                    INNER JOIN cartitem ON cart.CartID = cartitem.CartID
-                                    INNER JOIN product ON product.ProductID = cartitem.ProductID
-                                    WHERE account.UserID = $id
-                                ";
-
-                                $res = mysqli_query($conn, $sql);
-                            }
-                        ?>
-                        <?php if (mysqli_num_rows($res) > 0) { ?>
-                            <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-                                <tr class="product-<?= $row['ProductID'] ?>">
-                                    <td class="align-middle"><img src="../public/img/product-img-<?= $row['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="width: 50px;"><?= $row['Name'] ?></td>
-                                    
-                                    <td class="align-middle price"><?= $row['Price'] ?></td>
-                                    
-                                    <td class="align-middle">
-                                        <div class="input-group quantity mx-auto" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-primary btn-minus" onclick="updateQuantity(<?= $row['ProductID'] ?>, -1)">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-
-                                            <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<?= $row['Quantity'] ?>">
-
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-primary btn-plus " onclick="updateQuantity(<?= $row['ProductID'] ?>, 1)">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
+                        <?php foreach($cartItems as $cartItem) { ?>
+                            
+                            <tr class="product-<?= $cartItem['ProductID'] ?>">
+                                <td class="align-middle">
+                                    <img 
+                                        src="../public/img/product-img-<?= $cartItem['ProductID'] ?>.jpg?v=<?php echo time(); ?>" 
+                                        alt="" 
+                                        style="width: 50px;"
+                                    >
+                                    <?= $cartItem['Name'] ?>
+                                </td>
+                                
+                                <td class="align-middle price"><?= $cartItem['Price'] ?></td>
+                                
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button 
+                                                class="btn btn-sm btn-primary btn-minus" 
+                                                onclick="updateQuantity(<?= $cartItem['ProductID'] ?>, -1)"
+                                            >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
                                         </div>
-                                    </td>
-                                    
-                                    <td class="align-middle total"><?= $row['Total'] ?></td>
 
-                                    <td class="align-middle">
-                                        <button class="btn btn-sm btn-danger" onclick="deleteItem(<?= $row['ProductID'] ?>)">
-                                            <i class="fa fa-times"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                                        <input 
+                                            type="text" 
+                                            class="form-control form-control-sm bg-secondary border-0 text-center" 
+                                            value="<?= $cartItem['Quantity'] ?>"
+                                        >
+
+                                        <div class="input-group-btn">
+                                            <button 
+                                                class="btn btn-sm btn-primary btn-plus " 
+                                                onclick="updateQuantity(<?= $cartItem['ProductID'] ?>, 1)"
+                                            >
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                                <td class="align-middle total"><?= $cartItem['Total'] ?></td>
+
+                                <td class="align-middle">
+                                    <button 
+                                        class="btn btn-sm btn-danger" 
+                                        onclick="deleteItem(<?= $cartItem['ProductID'] ?>)"
+                                    >
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>

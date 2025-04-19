@@ -38,18 +38,18 @@ async function placeOrder () {
 
     const [orderCreated] = await Promise.all([
         createOrder(address.value, sum + shippingPrice, paymentMethod.value, shippingType.value),
-        // deleteCartItems()
+        deleteCartItems()
     ])
 
     if (!orderCreated) throw new Error('Can not create order')
-    // if (!cartCleared) throw new Error('Can not clear cart items')
+    if (!cartCleared) throw new Error('Can not clear cart items')
 
     popupContainer.style.display = 'block'
     popup.classList.add('animation')
 
     popup.addEventListener('animationend', () => {
         popupContainer.style.display = 'none'
-        // window.location.href = '/views/index.php'
+        window.location.href = '/views/index.php'
     })
 }
 

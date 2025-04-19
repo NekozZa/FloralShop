@@ -21,7 +21,8 @@
             ORDER BY RAND() LIMIT $limit
         ";
 
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
     function getRandomProductsOutsideBound ($conn, $limit, $bound) {
@@ -34,7 +35,8 @@
             ORDER BY RAND() LIMIT $limit
         ";
 
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
     function getProductsInBound($conn, $limit, $bound) {
@@ -47,7 +49,8 @@
             ORDER BY RAND() LIMIT $limit
         ";
 
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
     function getRandomProductsByCategory ($conn, $categoryID, $limit) {
@@ -60,10 +63,11 @@
             ORDER BY RAND() LIMIT $limit
         ";
             
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
-    function getShopProductsByShopID ($conn, $shopID) {
+    function getShopProductsByShopID ($conn, $shopID, $sorting) {
         $sql = "
             SELECT  product.Description,
                     product.CategoryID, 
@@ -79,10 +83,11 @@
             LEFT JOIN productreview ON product.ProductID = productreview.ProductID
             WHERE shop.ShopID = $shopID
             GROUP BY product.ProductID, product.Name, product.Price, shop.ShopID, product.StockQuantity, product.CategoryID, product.Description
-            ORDER BY AvgRating DESC
+            ORDER BY $sorting DESC
         ";
             
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
     function getProductsOrderedByField ($conn, $field, $direction, $limit) {
@@ -94,7 +99,8 @@
             ORDER BY $field $direction LIMIT $limit
         ";
         
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
     function getProductsBySearchBar($conn, $search, $limit) {
@@ -108,7 +114,19 @@
             ORDER BY RAND() LIMIT $limit
         ";
 
-        return mysqli_query($conn, $sql);
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
     }
 
+    function getProductReviews($conn, $productID) {
+        $sql = "
+            SELECT Comment, CreateDate, Rating, Username 
+            FROM productreview
+            INNER JOIN account ON productreview.UserID=account.UserID
+            WHERE productreview.ProductID=$productID
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
+    }
 ?>

@@ -1,10 +1,12 @@
-async function addItem(productID) {
+async function addItemByQuantity(productID) {
+    const quantity = Number(document.querySelector('.input-group .quantity').value)
+
     const res = await fetch('/controller/cart.php', {
         method: 'POST',
         headers: {
             "Content-Type": 'application/json'
         },
-        body: JSON.stringify({productID: productID})
+        body: JSON.stringify({productID: productID, quantity: quantity})
     })
 
     const data = await res.json()

@@ -1,7 +1,8 @@
-<?php include '../controller/database.php' ?>
-
 <?php 
     session_start();
+    include '../controller/database.php';
+
+    $orderItems = isset($_SESSION['UserID']) ? getOrderItems($conn) : [];
 ?>
 
 <!DOCTYPE html>
@@ -73,43 +74,25 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        <?php 
-                            if (isset($_SESSION['UserID'])) {
-                                $id = $_SESSION['UserID'];
+                        <?php foreach($orderItems as $orderItem) { ?>
+                            <tr 
+                                class="product-<?= $orderItem['ProductID'] ?>" 
+                                onclick="viewOrderDetail(<?= $orderItem['OrderItemID'] ?>)" 
+                                style="cursor: pointer;"
+                            >
+                                <td class="d-flex justify-content-start align-items-center">
+                                    <img src="/public/img/product-img-<?= $orderItem['ProductID'] ?>.jpg?v=<?php echo time(); ?>" 
+                                    style="width: 50px;"
+                                >
+                                    <?= $orderItem['ProductName'] ?>
+                                </td>
 
-                                $sql = "
-                                    SELECT 
-                                        order.OrderID,
-                                        order.Status,
-                                        product.ProductID,
-                                        product.Name as ProductName,
-                                        product.Price,
-                                        orderitem.OrderItemID,
-                                        orderitem.Quantity,
-                                        orderitem.Price as Total,
-                                        shop.Name as ShopName
-                                    FROM account
-                                    INNER JOIN `order` ON account.UserID = `order`.UserID
-                                    INNER JOIN orderitem ON `order`.OrderID = orderitem.OrderID
-                                    INNER JOIN product ON orderitem.ProductID = product.ProductID
-                                    INNER JOIN shop ON product.ShopID = shop.ShopID
-                                    WHERE account.UserID = $id
-                                ";
-
-                                $res = mysqli_query($conn, $sql);
-                            }
-                        ?>
-                        <?php if (mysqli_num_rows($res) > 0) { ?>
-                            <?php while ($row = mysqli_fetch_assoc($res)) { ?>
-                                <tr class="product-<?= $row['ProductID'] ?>" onclick="viewOrderDetail(<?= $row['OrderItemID'] ?>)" style="cursor: pointer;">
-                                    <td class="d-flex justify-content-start align-items-center"><img src="/public/img/product-img-<?= $row['ProductID'] ?>.jpg?v=<?php echo time(); ?>" alt="" style="width: 50px;"><?= $row['ProductName'] ?></td>
-                                    <td class="align-middle price"><?= $row['Price'] ?></td>
-                                    <td class="align-middle"><?= $row['Quantity'] ?></td>
-                                    <td class="align-middle total"><?= $row['Total'] ?></td>
-                                    <td class="align-middle"><?= $row['Status'] ?></td>
-                                    <td class="align-middle"><?= $row['ShopName'] ?></td>
-                                </tr>
-                            <?php } ?>
+                                <td class="align-middle price"><?= $orderItem['Price'] ?></td>
+                                <td class="align-middle"><?= $orderItem['Quantity'] ?></td>
+                                <td class="align-middle total"><?= $orderItem['Total'] ?></td>
+                                <td class="align-middle"><?= $orderItem['Status'] ?></td>
+                                <td class="align-middle"><?= $orderItem['ShopName'] ?></td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>

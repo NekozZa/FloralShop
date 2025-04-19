@@ -22,7 +22,6 @@
             echo json_encode([
                 'message' => 'Successful',
                 'coord' => $userAddressCoordinates 
-
             ]);
         }
     }

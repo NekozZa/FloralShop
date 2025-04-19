@@ -25,6 +25,8 @@ async function updateQuantity(id, offset) {
 }
 
 async function deleteItem(id) {
+    console.log(id)
+
     const res = await fetch('/controller/cart.php', {
         method: 'DELETE',
         headers: { "Content-Type": 'application/json' },
@@ -32,6 +34,9 @@ async function deleteItem(id) {
     })
     
     const data = await res.json()
+    console.log(data)
+
+    
     document.querySelector(`.product-${id}`).remove()
     updateOrderTotal()
 }

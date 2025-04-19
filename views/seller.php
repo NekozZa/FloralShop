@@ -9,7 +9,14 @@
     }
 
     $shopID = $_GET['shopID'];
-    $products = getShopProductsByShopID ($conn, $shopID);
+    $products = null;
+
+    if (isset($_GET['sorting'])) {
+        $products = getShopProductsByShopID ($conn, $shopID, $_GET['sorting']);
+    } else {
+        $products = getShopProductsByShopID ($conn, $shopID, 'AvgRating');
+    }
+    
 ?>
 
 
@@ -218,9 +225,21 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Latest</a>
-                                        <a class="dropdown-item" href="#">Popularity</a>
-                                        <a class="dropdown-item" href="#">Best Rating</a>
+                                        <a 
+                                            class="dropdown-item <?= (isset($_GET['sorting']) && $_GET['sorting'] == 'CountReviews') ? 'text-primary' : '' ?>" 
+                                            onclick="setSorting(<?= $shopID ?>, 'CountReviews')" 
+                                            style="cursor: pointer"
+                                        >
+                                            Popularity
+                                        </a>
+
+                                        <a 
+                                            class="dropdown-item <?= (isset($_GET['sorting']) && $_GET['sorting'] == 'AvgRating') ? 'text-primary' : '' ?>" 
+                                            onclick="setSorting(<?= $shopID ?>, 'AvgRating')" 
+                                            style="cursor: pointer"
+                                        >
+                                            Best Rating
+                                        </a>
                                     </div>
                                 </div>
                             </div>
