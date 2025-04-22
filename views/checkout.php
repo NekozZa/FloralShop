@@ -42,6 +42,7 @@
     <link href="/public/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/public/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/public/css/style.css" rel="stylesheet">
@@ -97,19 +98,13 @@
                                 <div class="">
                                     <div class="form-group">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="payment" id="paypal" value="Paypal">
-                                            <label class="custom-control-label" for="paypal">Paypal</label>
+                                            <input type="radio" class="custom-control-input" name="payment" id="directcheck" value="Direct Check" checked onclick="setPaymentMethod('Direct')">
+                                            <label class="custom-control-label" for="directcheck">Direct Check</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="payment" id="directcheck" value="Direct Check">
-                                            <label class="custom-control-label" for="directcheck">Direct Check</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="payment" id="banktransfer" value="Bank Transfer">
+                                            <input type="radio" class="custom-control-input" name="payment" id="banktransfer" value="Bank Transfer" onclick="setPaymentMethod('Bank')">
                                             <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                                         </div>
                                     </div>
@@ -124,7 +119,7 @@
                                 <div class="">
                                     <div class="form-group">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="shipping" id="regular" value="Regular" onclick="setShippingPrice(5)">
+                                            <input type="radio" class="custom-control-input" name="shipping" id="regular" value="Regular" checked onclick="setShippingPrice(5)">
                                             <label class="custom-control-label" for="regular">Regular</label>
                                         </div>
                                     </div>
@@ -132,12 +127,6 @@
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" name="shipping" id="fast" value="Fast" onclick="setShippingPrice(10)">
                                             <label class="custom-control-label" for="fast">Fast</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" name="shipping" id="flash" value="Flash" onclick="setShippingPrice(20)">
-                                            <label class="custom-control-label" for="flash">Flash</label>
                                         </div>
                                     </div>
                                 </div>
@@ -158,6 +147,12 @@
                 </div>
             </div>
             <div class="col-lg-4">
+                <div class="justify-content-center mb-3 qr-container" style="display: none">
+                    <div id="reader" class="border rounded bg-white p-4 ">
+                        <img class="img-fluid" src="" alt="">
+                    </div>
+                </div>
+                
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Total</span></h5>
                 <div class="bg-light p-30 mb-3">
                     <div class="border-bottom">
@@ -277,7 +272,7 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
+    
     <script src="../public/js/checkout.js?v=<?php echo time(); ?>"></script>
 
     <!-- JavaScript Libraries -->

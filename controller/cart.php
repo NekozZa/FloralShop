@@ -61,16 +61,22 @@
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         $cartID = getCart($conn, $_SESSION['UserID']);
         $message = '';
+        $info = '';
 
         if (isset($data['productID'])) {
             deleteCartItem($conn, $cartID, $data['productID']);
-            $message = 'Delete cartitem with id: ' . $data['productID'];
+            $info = 'Delete cartitem with id: ' . $data['productID'];
+            $message = 'Successful';
         } else {
             deleteCartItems($conn, $cartID);
-            $message = 'Delete all cartitems';
+            $info = 'Delete all cartitems';
+            $message = 'Successful';
         }
         
-        echo json_encode(['message' => $message]);
+        echo json_encode([
+            'message' => $message,
+            'id' => $cartID
+        ]);
     }
 ?>
 

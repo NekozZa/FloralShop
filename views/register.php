@@ -1,5 +1,3 @@
-<?php include '../controller/database.php' ?>
-
 <?php 
   include '../controller/database.php';
   include '../controller/mapbox.php';
@@ -23,7 +21,7 @@
       if (isset($_POST['shopName']) && $role === 'Seller') {
         $shopName = $_POST['shopName'];
         $shopDescription = $_POST['shopDescription'];
-        addNewShop($conn, $shopName, $shopDescription);
+        addNewShop($conn, $userID, $shopName, $shopDescription, $shopAddress);
       }
 
       $_SESSION['UserID'] = $userID;
@@ -43,7 +41,7 @@
     return $userID;
   }
 
-  function addNewShop($conn, $shopName, $shopAddress, $shopDescription) {
+  function addNewShop($conn, $userID, $shopName, $shopDescription, $shopAddress) {
     $sql = "
       INSERT INTO shop (UserID, Name, Description, Address)
       VALUES ($userID, '$shopName', '$shopDescription', '$shopAddress')
@@ -145,7 +143,7 @@
               </div>
               
               <div class="form-group mb-2" style="position: relative">
-                <label for="">Address*</label>  
+                <label for="">Shop Address*</label>  
                 <input type="text" class="form-control" name="shopAddress" autocomplete="off" required>
                 <div class="invalid-feedback">Can't be empty</div>
                 <div class="suggestion-container w-100 mt-2" style="position: absolute;">

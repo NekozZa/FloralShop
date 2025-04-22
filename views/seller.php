@@ -1,8 +1,6 @@
-<?php include '../controller/database.php' ?>
-
 <?php 
     session_start();
-    include '../controller/product.php';
+    include '../controller/database.php';
 
     if (!isset($_SESSION['UserID'])) {
         header('Location: login.php');
@@ -10,6 +8,8 @@
 
     $shopID = $_GET['shopID'];
     $products = null;
+    $shopInfo = getShopInfo($conn, $shopID);
+    $orders = getShopOrders($conn, $shopID);
 
     if (isset($_GET['sorting'])) {
         $products = getShopProductsByShopID ($conn, $shopID, $_GET['sorting']);
@@ -73,20 +73,9 @@
                     </div>
 
                     <div class="ml-3 mt-3 text-primary">
-                        <?php 
-                            $sql = "
-                                SELECT Name, Description
-                                FROM shop
-                                WHERE shop.ShopID = $shopID
-                            ";
-                    
-                            $data = mysqli_query($conn, $sql);
-                            $row = mysqli_fetch_assoc($data);
-                        ?>
-
-                        <?= $row['Name'] ?>
+                        <?= $shopInfo['Name'] ?>
                         <p class="text-dark">
-                            <small><?= $row['Description'] ?></small>    
+                            <small><?= $shopInfo['Description'] ?></small>    
                         </p>
                     </div>
                 </div>
@@ -95,33 +84,12 @@
             <div class="col-lg-9 p-0 d-flex justify-content-between">
                 <ul class="m-0 p-0" style="list-style: none">
                     <li class="mb-2">
-                        <?php 
-                            $sql = "
-                                SELECT COUNT(product.ProductID) as TotalProducts
-                                FROM shop
-                                INNER JOIN product ON shop.ShopID = product.ShopID 
-                                WHERE shop.ShopID = $shopID
-                            ";
-                    
-                            $data = mysqli_query($conn, $sql);
-                            $length = mysqli_fetch_assoc($data);
-                        ?>
-                        <i class="bi bi-box-seam"></i> Products: <?= $length['TotalProducts'] ?>
+                        <i class="bi bi-box-seam"></i> 
+                        Products: <?= $shopInfo['TotalProducts'] ?>
                     </li>
                     <li>
-                        <?php 
-                            $sql = "
-                                SELECT AVG(productreview.Rating) as AvgRating
-                                FROM shop
-                                INNER JOIN product ON shop.ShopID = product.ShopID 
-                                INNER JOIN productreview ON product.ProductID = productreview.ProductID
-                                WHERE shop.ShopID = $shopID
-                            ";
-
-                            $data = mysqli_query($conn, $sql);
-                            $rating = mysqli_fetch_assoc($data);
-                        ?>
-                        <i class="bi bi-star"></i> Rating: <?= number_format($rating['AvgRating'], 2, '.', '') ?>
+                        <i class="bi bi-star"></i> 
+                        Rating: <?= number_format($shopInfo['AvgRating'], 2, '.', '') ?>
                     </li>
                 </ul>
 
@@ -247,8 +215,8 @@
                     </div>
                     
                     
-                    <?php if (mysqli_num_rows($products) > 0) { ?>
-                        <?php while ($product = mysqli_fetch_assoc($products)) { ?>
+                    <?php if (count($products) > 0) { ?>
+                        <?php foreach ($products as $product) { ?>
                             <div class="col-lg-4 col-md-6 col-sm-6 pb-1 product product-<?= $product['ProductID'] ?>">
                                 <?php include './partials/product.php' ?>
                             </div>
@@ -256,7 +224,6 @@
                     <?php } ?>
                 </div>
             </div>
-            <!-- Shop Product End -->
         </div>
     </div>
 
@@ -270,12 +237,22 @@
                 <div class="modal-body">
                     <form id="edit-form">
                         <div class="row">
-                            <!-- Cột trái: hình ảnh -->
                             <div class="col-md-6 border-end">
                                 <div class="mb-3">
                                     <label for="imageUpload" class="form-label">Image of product:</label>
-                                    <img id="previewImage" src= "" alt="Ảnh sản phẩm" class="img-fluid mb-3" style="max-height: 200px;">
-                                    <input type="file" class="form-control" id="imageUpload" name="productImage" accept="images/*">
+                                    <img 
+                                        id="previewImage" 
+                                        src= "" alt="" 
+                                        class="img-fluid mb-3" 
+                                        style="max-height: 200px;"
+                                    >
+                                    <input 
+                                        type="file" 
+                                        class="form-control" 
+                                        id="imageUpload" 
+                                        name="productImage" 
+                                        accept="images/*"
+                                    >
                                 </div>
                             </div>
 
@@ -390,24 +367,14 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                            <?php 
-                                $sql = "
-                                    SELECT OrderDate, Status, Address, Name, Quantity, TotalAmount
-                                    FROM `order`
-                                    INNER JOIN orderitem ON `order`.OrderID = orderitem.OrderID
-                                    INNER JOIN product ON orderitem.ProductID = product.ProductID
-                                    WHERE product.ShopID = $shopID && Status = 'Pending'
-                                ";
 
-                                $orders = mysqli_query($conn, $sql);
-                            ?>
                         <tbody>
-                            <?php if (mysqli_num_rows($orders) > 0) { ?>
-                                <?php while ($order = mysqli_fetch_assoc($orders)) { ?>
+                            <?php if (count($orders) > 0) { ?>
+                                <?php foreach ($orders as $order) { ?>
                                     <tr>
                                         <td><?=$order['Name'] ?></td>
-                                        <td><?=$order['Quantity'] ?></td>
                                         <td><?=$order['Address'] ?></td>
+                                        <td><?=$order['Quantity'] ?></td>
                                         <td><?=$order['OrderDate'] ?></td>
                                         <td><?=$order['Status'] ?></td>
                                     </tr>

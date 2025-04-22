@@ -36,7 +36,7 @@
 
         <a class="h6 text-decoration-none text-truncate name" href=""><?= $product['Name'] ?></a>
         <div class="d-flex align-items-center justify-content-center mt-2">
-            <h5 class="price"><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] ?></del></h6>
+            <h5 class="price"><?= $product['Price'] ?></h5><h6 class="text-muted ml-2"><del><?= $product['Price'] + 20 ?></del></h6>
         </div>
         <div class="d-flex align-items-center justify-content-center mb-1">
             <?php include './partials/product_rating.php' ?>

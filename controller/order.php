@@ -8,20 +8,46 @@
     $raw = file_get_contents("php://input");
     $data = json_decode($raw, true);   
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+        isset($data['database']) && isset($data['table'])) {
+        
+        $sql = "
+            SELECT AUTO_INCREMENT
+            FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = ? and TABLE_NAME = ?
+        ";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'ss', $data['database'], $data['table']);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $nextID);
+        mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+
+        echo json_encode([
+            'nextID' => $nextID,
+            'message' => 'Successful'
+        ]);
+
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['UserID'])) {
         if (isset($data['address']) && isset($data['totalAmount']) &&
-            isset($data['paymentMethod']) && isset($data['shippingType'])) {
+            isset($data['paymentMethod']) && isset($data['shippingType']) &&
+            isset($data['isPaid'])) {
 
             $userAddressCoordinates = getAddressCoordinates($data['address']);
 
             createNewOrder($conn, $data['address'], $data['totalAmount'], $data['paymentMethod'], $data['shippingType']);
             $orderID = mysqli_insert_id($conn);
-            $orderItems = getOrderItems($conn);
+            $orderItems = getOrderItemsToProcess($conn);
             addOrderItems($conn, $orderID, $orderItems, $userAddressCoordinates);
+            addPayment($conn, $orderID, $data['totalAmount'], $data['isPaid']);
 
             echo json_encode([
                 'message' => 'Successful',
-                'coord' => $userAddressCoordinates 
+                'coord' => $userAddressCoordinates, 
+                'items' => $orderItems
             ]);
         }
     }
@@ -39,7 +65,7 @@
         mysqli_query($conn, $sql);
     }
 
-    function getOrderItems($conn) {
+    function getOrderItemsToProcess($conn) {
         $userID = $_SESSION['UserID'];
 
         $sql = "
@@ -85,4 +111,13 @@
 
         return $data['Address'];
     }
+
+    function addPayment($conn, $orderID, $amount, $isPaid) {
+        $sql = "
+            INSERT INTO payment (OrderID, Amount, IsPaid)
+            VALUES ($orderID, $amount, $isPaid)
+        ";
+
+        $res = mysqli_query($conn, $sql);
+    }   
 ?>

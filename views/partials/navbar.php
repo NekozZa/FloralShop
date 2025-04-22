@@ -37,6 +37,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.php" class="nav-item nav-link active">Home</a>
                         <a href="shop.php" class="nav-item nav-link">Shop</a>
+                        <a href="scanner.php" class="nav-item nav-link">Scanner</a>
                         <?php if (isset($_SESSION['Role']) && $_SESSION['Role'] === 'Seller') { ?>
                             <?php 
                                 $userID = $_SESSION['UserID'];
@@ -52,6 +53,7 @@
                             ?>
 
                             <a href="seller.php?shopID=<?= $data['ShopID'] ?>" class="nav-item nav-link">Shop Detail</a>
+                            
                         <?php } ?>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>

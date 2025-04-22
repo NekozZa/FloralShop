@@ -107,4 +107,61 @@
 
     // Interact with products
     include 'database_product.php';
+
+    // Interact with seller shop
+
+    function getShopInfo($conn, $shopID) {
+        $sql = "
+            SELECT Name, Description
+            FROM shop
+            WHERE ShopID = $shopID
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_assoc($res);
+        $data['AvgRating'] = getShopAvgRating($conn, $shopID);
+        $data['TotalProducts'] = getShopTotalProducts($conn, $shopID);
+        return $data;
+    }
+
+
+    function getShopTotalProducts($conn, $shopID) {
+        $sql = "
+            SELECT COUNT(product.ProductID) as TotalProducts
+            FROM shop
+            INNER JOIN product ON shop.ShopID = product.ShopID 
+            WHERE shop.ShopID = $shopID
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_assoc($res);
+        return $data['TotalProducts'];
+    }
+
+    function getShopAvgRating($conn, $shopID) {
+        $sql = "
+            SELECT AVG(productreview.Rating) as AvgRating
+            FROM shop
+            INNER JOIN product ON shop.ShopID = product.ShopID 
+            INNER JOIN productreview ON product.ProductID = productreview.ProductID
+            WHERE shop.ShopID = $shopID
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        $data = mysqli_fetch_assoc($res);
+        return $data['AvgRating'];
+    }
+
+    function getShopOrders($conn, $shopID) {
+        $sql = "
+            SELECT OrderDate, Status, Address, Name, Quantity, TotalAmount
+            FROM `order`
+            INNER JOIN orderitem ON `order`.OrderID = orderitem.OrderID
+            INNER JOIN product ON orderitem.ProductID = product.ProductID
+            WHERE product.ShopID = $shopID && Status = 'Pending'
+        ";
+
+        $res = mysqli_query($conn, $sql);
+        return fetch_assoc_all($res);
+    }
 ?>
