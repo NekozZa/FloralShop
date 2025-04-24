@@ -1,46 +1,45 @@
-<div class="container-fluid bg-dark text-secondary mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
-        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-            <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
-            <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
-            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-        </div>
-        <div class="col-lg-8 col-md-12">
+<footer>
+    <div class="footer-main">
+        <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-5">
-                    <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-secondary mb-2" href="index.php"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-secondary mb-2" href="cart.php"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a class="text-secondary mb-2" href="checkout.php"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>Business Time</h4>
+                        <ul class="text-white">
+                            <li>Monday - Friday: 08.00am to 05.00pm</li> <li>Saturday: 10.00am to 08.00pm</li> <li>Sunday: <span>Closed</span></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-4 mb-5">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Customer Service</a></li>
+                            <li><a href="#">Our Sitemap</a></li>
+                            <li><a href="#">Terms &amp; Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-5">
-                    <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
-                    <div class="d-flex">
-                        <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li>
+                                <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                            </li>
+                            <li>
+                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
-        <div class="col-md-6 px-xl-0">
-            <p class="mb-md-0 text-center text-md-left text-secondary">
-                &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
-                by
-                <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a>
-            </p>
-        </div>
-        <div class="col-md-6 px-xl-0 text-center text-md-right">
-            <img class="img-fluid" src="/public/img/payments.png" alt="">
-        </div>
-    </div>
-</div>
+</footer>

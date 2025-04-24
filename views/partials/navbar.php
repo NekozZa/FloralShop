@@ -1,83 +1,81 @@
-<?php 
-    $categories = getCategories($conn);
-?>
+<header class="main-header">
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+                <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
+            </div>
+            <!-- End Header Navigation -->
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.min.css">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="shop.php">Sidebar Shop</a></li>
+                            <li><a href="shop-detail.php">Shop Detail</a></li>
+                            <li><a href="cart.php">Cart</a></li>
+                            <li><a href="checkout.php">Checkout</a></li>
+                            <li><a href="my-account.php">My Account</a></li>
+                            <li><a href="wishlist.php">Wishlist</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
 
-<div class="container-fluid bg-dark mb-30" style="position: sticky; top: 0px; z-index: 300">
-    <div class="row px-xl-5" style="position: relative">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
-                <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
-                <i class="fa fa-angle-down text-dark"></i>
-            </a>
-            <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
-                <div class="navbar-nav w-100">
-                    <?php foreach($categories as $category) { ?>
-                        <a 
-                            href="/views/shop.php?categoryID=<?= $category['CategoryID'] ?>" 
-                            class="nav-item nav-link"
-                        >
-                            <?= $category['Name'] ?>
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <ul>
+                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                    <li class="side-menu">
+                        <a href="#">
+                            <i class="fa fa-shopping-bag"></i>
+                            <span class="badge">3</span>
+                            <p>My Cart</p>
                         </a>
-                    <?php } ?>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+            </div>
+            <!-- End Atribute Navigation -->
         </div>
-        <div class="col-lg-9">
-            <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                <a href="index.php" class="text-decoration-none d-block d-lg-none">
-                    <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
-                    <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="index.php" class="nav-item nav-link active">Home</a>
-                        <a href="shop.php" class="nav-item nav-link">Shop</a>
-                        <a href="scanner.php" class="nav-item nav-link">Scanner</a>
-                        <?php if (isset($_SESSION['Role']) && $_SESSION['Role'] === 'Seller') { ?>
-                            <?php 
-                                $userID = $_SESSION['UserID'];
-
-                                $sql = "
-                                    SELECT ShopID
-                                    FROM shop
-                                    WHERE shop.UserID = $userID
-                                ";
-
-                                $res = mysqli_query($conn, $sql);
-                                $data = mysqli_fetch_assoc($res);
-                            ?>
-
-                            <a href="seller.php?shopID=<?= $data['ShopID'] ?>" class="nav-item nav-link">Shop Detail</a>
-                            
-                        <?php } ?>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
-                            <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                <a href="cart.php" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.php" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                        <a href="order.php" class="btn px-0 ml-3">
-                            <i class="ri-truck-fill text-primary" style="font-size: 22px"></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"><?= isset($orderCount) ? $orderCount : 0 ?></span>                            
-                        </a>
-
-                        <a href="cart.php" class="btn px-0 ml-3">
-                            <i class="fas fa-shopping-cart text-primary" ></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle item-count" style="padding-bottom: 2px;"><?= isset($itemCount) ? $itemCount : 0 ?></span>      
-                        </a>
-                    </div>
-                </div>
-            </nav>
+        <!-- Start Side Menu -->
+        <div class="side">
+            <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+            <li class="cart-box">
+                <ul class="cart-list">
+                    <li>
+                        <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
+                        <h6><a href="#">Delica omtantur </a></h6>
+                        <p>1x - <span class="price">$80.00</span></p>
+                    </li>
+                    <li>
+                        <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
+                        <h6><a href="#">Omnes ocurreret</a></h6>
+                        <p>1x - <span class="price">$60.00</span></p>
+                    </li>
+                    <li>
+                        <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
+                        <h6><a href="#">Agam facilisis</a></h6>
+                        <p>1x - <span class="price">$40.00</span></p>
+                    </li>
+                    <li class="total">
+                        <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                        <span class="float-right"><strong>Total</strong>: $180.00</span>
+                    </li>
+                </ul>
+            </li>
         </div>
-    </div>
-</div>
-
-
+        <!-- End Side Menu -->
+    </nav>
+    <!-- End Navigation -->
+</header>
