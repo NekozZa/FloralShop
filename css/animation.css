@@ -1,0 +1,51 @@
+/* Thông báo "Thêm thành công" */
+.cart-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Chuyển từ right: 20px sang left: 20px */
+    background-color: #28a745; /* Màu xanh */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    display: none; /* Mặc định không hiển thị */
+    opacity: 0;
+    z-index: 9999;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.cart-notification .notification-content {
+    display: flex;
+    align-items: center;
+}
+
+.cart-notification .notification-content i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.cart-notification.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(0); /* Hiện thị với hiệu ứng trượt */
+}
+
+/* Hiệu ứng nút khi nhấn */
+.add-to-cart.active {
+    background-color: #ff8c00;  /* Màu khi nhấn */
+    transform: scale(0.95);  /* Giảm kích thước khi nhấn */
+}
+
+/* Hiệu ứng bounce khi nhấn */
+.add-to-cart.active i {
+    animation: bounce 0.4s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+}
