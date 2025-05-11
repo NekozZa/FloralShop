@@ -114,8 +114,8 @@
     }
     else if($_SERVER['REQUEST_METHOD'] === 'GET'){
         if (isset($_GET['action']) && $_GET['action'] === 'getAll') {
-            
             $flowers = $request_controller->get_all_flowers();
+            var_dump($flowers);
             response(0, 'Fetched Products', $flowers);
         }
         else if (isset($_GET['action']) && $_GET['action'] === 'filter') {
@@ -180,9 +180,6 @@
             }
         }
     }
-    
-
-
 
     function response($code, $message, $data = null) {
         die(json_encode([

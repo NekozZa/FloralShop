@@ -213,7 +213,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="js/cart.js"></script>
+    <script src="public/js/cart.js"></script>
 </body>
 
 </html>

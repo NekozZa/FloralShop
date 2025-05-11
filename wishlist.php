@@ -158,9 +158,8 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="js/wishlist.js"></script>
-
-    <script src="js/cart_wishlist.js"></script>
+    <script src="public/js/wishlist.js"></script>
+    <script src="public/js/cart_wishlist.js"></script>
     <link rel="stylesheet" href="css/animation.css">
 </body>
 
