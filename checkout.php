@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    // $account_id = $_SESSION['account_id'] ?? null;
+    $_SESSION['account_id'] = 1;
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -269,9 +276,10 @@
                                 <div class="title-left">
                                     <h3>Shopping cart</h3>
                                 </div>
-                                <div class="rounded p-2 bg-light">
-                                    <div class="media mb-2 border-bottom">
-                                        <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
+                                <div class="rounded p-2 bg-light" id="cart">
+                                    <!-- <div class="media mb-2 border-bottom">
+                                        <div class="media-body">
+                                            <a href="detail.html">Item name</a>
                                             <div class="small text-muted">Price: $80.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $80.00</div>
                                         </div>
                                     </div>
@@ -284,7 +292,7 @@
                                         <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
                                             <div class="small text-muted">Price: $40.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $40.00</div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -300,29 +308,29 @@
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                    <div id="subtotal" class="ml-auto font-weight-bold"></div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 40 </div>
+                                    <div id="discount" class="ml-auto font-weight-bold"> </div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Coupon Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 10 </div>
+                                    <div id="coupon-discount" class="ml-auto font-weight-bold">  </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Tax</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 2 </div>
+                                    <div id="tax" class="ml-auto font-weight-bold">  </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Shipping Cost</h4>
-                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                    <div id="shipping" class="ml-auto font-weight-bold"> Free </div>
                                 </div>
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Grand Total</h5>
-                                    <div class="ml-auto h5"> $ 388 </div>
+                                    <div id="total" class="ml-auto h5"></div>
                                 </div>
                                 <hr> </div>
                         </div>
@@ -368,6 +376,79 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            
+            function fetchCartItems(){
+                fetch('./controller/cart_controller.php',{
+                    method: 'GET',
+                    headers:{
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(responeseData =>{
+                    console.log(responeseData);
+                    if(responeseData.code === 0){
+                        loadCartItems(responeseData.return);
+                        calculateSummary(responeseData.return);
+                    }
+                    else{
+                        alert(responeseData.message);
+                    }
+                })
+            }
+            function loadCartItems(items){
+                const cart = document.getElementById('cart');
+                cart.innerHTML = '';
+
+                if(items.length === 0){
+                    cart.innerHTML = `<p>Your cart is empty. </p>`
+                    return;
+                }
+                items.forEach(item => {
+                    const cartItem = document.createElement('div')
+                    cartItem.classList.add('media', 'mb-2', 'border-bottom');
+                    cartItem.innerHTML =
+                    `<div class="media-body"> 
+                    <a href="detail.html">${item.name}</a>
+                    <div class="small text-muted">Price: $${item.price}<span class="mx-2">|</span> Qty: ${item.quantity}<span class="mx-2">|</span> Subtotal: $${(item.price * item.quantity).toFixed(2)}</div>
+                    </div>`;
+                    cart.appendChild(cartItem);
+
+                });
+            }
+            function calculateSummary(items){
+                //Initialize variables
+                let subtotal = 0;
+                
+                //Testing
+                let discount = 1000; 
+                let couponDiscount = 500; 
+                let tax = 20;
+
+                let shippingCost = 0;
+                let grandtotal = 0;
+
+                //Calculate subtotal
+                items.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                });
+                grandtotal = ((subtotal - discount - couponDiscount) + tax + shippingCost).toFixed(2);
+
+                //Show UI
+                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
+                document.getElementById('coupon-discount').textContent = `$${couponDiscount.toFixed(2)}`;
+                document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+                document.getElementById('shipping').textContent = shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`;
+                document.getElementById('total').textContent = `$${grandtotal}`;
+            }
+            fetchCartItems();
+        })
+        
+    </script>
 </body>
 
 </html>

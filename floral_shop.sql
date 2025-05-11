@@ -10,7 +10,8 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
+-- CREATE DATABASE IF NOT EXISTS floral_shop;
+-- USE floral_shop;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,6 +27,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `accounts`
 --
+
 
 CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL,
