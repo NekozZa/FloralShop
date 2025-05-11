@@ -5,22 +5,18 @@ document.addEventListener('click', function (e) {
         e.preventDefault();
         const productId = btn.getAttribute('data-product-id');
         
-        fetch('./controller/request_controller.php?action=addWishlist', {
+        fetch('./controller/wishlist_controller.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `flower_id=${encodeURIComponent(productId)}`
         })
         .then(res => res.json())
         .then(data => {
-            console.log(btn)
             btn.classList.add('active');
             setTimeout(() => {
                 btn.classList.remove('active');
             }, 500);
 
-            // Hiển thị thông báo "Thêm thành công"
             const notification = document.getElementById('cartNotification');
             notification.classList.add('show');
             setTimeout(() => {
@@ -31,16 +27,13 @@ document.addEventListener('click', function (e) {
         .catch(error => console.error('Error:', error));
     }
     else if(e.target.closest('.add-to-cart')){
-        const btn = e.target.closest('.add-to-cart')
-        console.log("hello")
         e.preventDefault();
+        const btn = e.target.closest('.add-to-cart')
         const productId = btn.getAttribute('data-product-id');
 
-        fetch('./controller/request_controller.php?action=addToCart', {
+        fetch('./controller/cart_controller.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `flower_id=${encodeURIComponent(productId)}`
         })
         .then(res => res.json())

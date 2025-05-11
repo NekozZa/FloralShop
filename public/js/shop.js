@@ -6,7 +6,7 @@ let selectedSort = '';
 const shopFlower = document.querySelector('.shop-box-inner')
 
 if (shopFlower) {
-    fetch('./controller/request_controller.php?action=getAll')
+    fetch('./controller/storage_controller.php', {method: 'GET'})
     .then(response => response.json())
     .then(data => {
         if (data.code == 0) {
@@ -42,17 +42,16 @@ sortBox.addEventListener('change', function() {
 });
 
 function sortFilterFlowers(categoryId = '', type ='', min_price='', max_price=''){
-    
-    fetch(`./controller/request_controller.php?action=filter&category_id=${encodeURIComponent(categoryId)}&sort=${encodeURIComponent(type)}&min_price=${encodeURIComponent(min_price)}&max_price=${encodeURIComponent(max_price)}`)
-        .then(response => response.json())
-        .then(data => {
-            numOfResult.innerHTML = `Showing all ${data.return.length} result`
-            displayFlowers(data.return);
-            listViewFlowers(data.return)
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+    fetch(`./controller/storage_controller.php?action=filter&category_id=${encodeURIComponent(categoryId)}&sort=${encodeURIComponent(type)}&min_price=${encodeURIComponent(min_price)}&max_price=${encodeURIComponent(max_price)}`)
+    .then(response => response.json())
+    .then(data => {
+        numOfResult.innerHTML = `Showing all ${data.return.length} result`
+        displayFlowers(data.return);
+        listViewFlowers(data.return)
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
 }
 
 function displayFlowers(flowers){

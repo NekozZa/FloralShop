@@ -1,5 +1,5 @@
 const tableWishList = document.querySelector('#tableWishList tbody')
-fetch(`./controller/request_controller.php?action=getWishList`)
+fetch(`./controller/wishlist_controller.php`, {method: 'GET'})
     .then(res => res.json())
     .then(data => {
         console.log(data)
@@ -51,23 +51,18 @@ fetch(`./controller/request_controller.php?action=getWishList`)
 
 document.addEventListener('click', function(e){
     if (e.target.closest('.removeRow')) {
-        console.log("hello")
+        e.stopPropagation()
         const btn = e.target.closest('.removeRow');
-        //e.preventDefault();
-         e.stopPropagation()
         let rowId = btn.getAttribute('data-product-id');
-        console.log(rowId)
-        fetch('./controller/request_controller.php?action=removeWishListRow', {
+
+        fetch('./controller/wishlist_controller.php', {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({wishlist_id:  rowId})
         })
         .then(res => res.json())
         .then(data => {
             const row = btn.closest('tr')
-            console.log(row)
             row.remove()
         })
         .catch(error => console.error('Error:', error));

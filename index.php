@@ -1,3 +1,9 @@
+<?php 
+    if (!isset($_SESSION['account_id'])) {
+        $_SESSION['account_id'] = 1;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->

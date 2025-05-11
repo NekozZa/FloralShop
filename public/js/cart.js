@@ -1,5 +1,5 @@
 const tableWishList = document.querySelector('#tableCartList tbody')
-fetch(`./controller/request_controller.php?action=getCartList`)
+fetch(`./controller/cart_controller.php`)
     .then(res => res.json())
     .then(data => {
         console.log(data)
@@ -44,17 +44,13 @@ fetch(`./controller/request_controller.php?action=getCartList`)
 
 document.addEventListener('click', function(e){
     if (e.target.closest('.removeRow')) {
-        console.log("hello")
-        const btn = e.target.closest('.removeRow');
-        //e.preventDefault();
         e.stopPropagation()
+        const btn = e.target.closest('.removeRow');
         let rowId = btn.getAttribute('data-product-id');
-        console.log(rowId)
-        fetch('./controller/request_controller.php?action=removeCartListRow', {
+        
+        fetch('./controller/cart_controller.php', {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({cartitem_id: rowId})
         })
         .then(res => res.json())
