@@ -1,3 +1,11 @@
+<?php session_start(); ?>
+
+<?php
+function getCurrentUrl() {
+    return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -203,7 +211,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -222,7 +234,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -241,7 +257,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -260,7 +280,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -279,7 +303,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -298,7 +326,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -317,7 +349,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">
@@ -336,7 +372,11 @@
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                         </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="cart" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="cart" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="why-text">

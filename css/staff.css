@@ -1,0 +1,119 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff5722; 
+    display: inline-block;
+    animation: fadeInDown 1s ease-out;
+    margin-bottom: 40px;
+}
+
+.page-title .highlight {
+    color: #007bff;
+}
+
+.page-title::after {
+    display: none;
+}
+
+.order-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.order-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    background-color: #f1f1f1;
+}
+
+.order-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-header span {
+    font-weight: normal;
+    color: #666;
+    font-size: 16px;
+}
+
+.product-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 10px 0;
+}
+
+.product-list li {
+    background-color: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.product-list li:hover {
+    background-color: #e9ecef;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button:focus {
+    outline: none;
+}
+
+p {
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #555;
+}
+
+.text-center {
+    text-align: center;
+    color: #444;
+}
+.pending {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.verify {
+    color: #007bff;
+    font-weight: bold;
+}

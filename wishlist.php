@@ -1,3 +1,11 @@
+<?php session_start(); ?>
+
+<?php
+function getCurrentUrl() {
+    return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -106,7 +114,11 @@
                                     </td>
                                     <td class="quantity-box">In Stock</td>
                                     <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                        <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="btn hvr-hover" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="remove-pr">
                                         <a href="#">
@@ -130,7 +142,11 @@
                                     </td>
                                     <td class="quantity-box">In Stock</td>
                                     <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                    <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="btn hvr-hover" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="remove-pr">
                                         <a href="#">
@@ -154,7 +170,11 @@
                                     </td>
                                     <td class="quantity-box">In Stock</td>
                                     <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                    <?php if (!isset($_SESSION['user_id'])): ?>
+                                            <a class="btn hvr-hover" href="views/partials/login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>">Add to Cart</a>
+                                        <?php else: ?>
+                                            <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="remove-pr">
                                         <a href="#">
