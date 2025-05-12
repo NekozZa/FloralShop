@@ -1,7 +1,7 @@
 <?php
     session_start();
     // $account_id = $_SESSION['account_id'] ?? null;
-    $_SESSION['account_id'] = 1;
+    $_SESSION['account_id'] = 2;
   
 ?>
 
@@ -431,18 +431,34 @@
                 let shippingCost = 0;
                 let grandtotal = 0;
 
+                let opt1 = document.getElementById('shippingOption1');
+                let opt2 = document.getElementById('shippingOption2');
+                let opt3 = document.getElementById('shippingOption3');
+
                 //Calculate subtotal
                 items.forEach(item => {
                     subtotal += item.price * item.quantity;
                 });
-                grandtotal = ((subtotal - discount - couponDiscount) + tax + shippingCost).toFixed(2);
+                
 
+                //Shipping Cost
+                if(opt1.checked){
+                    shippingCost = opt1.value;
+                }
+                if(opt2.checked){
+                    shippingCost = opt2.value;
+                }
+                if(opt3.checked){
+                    shippingCost = opt3.value;
+                }
+                console.log(shippingCost);
+                grandtotal = ((subtotal - discount -couponDiscount) + tax + shippingCost).toFixed(2);
                 //Show UI
                 document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
                 document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
                 document.getElementById('coupon-discount').textContent = `$${couponDiscount.toFixed(2)}`;
                 document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-                document.getElementById('shipping').textContent = shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`;
+                document.getElementById('shipping').textContent = shippingCost;
                 document.getElementById('total').textContent = `$${grandtotal}`;
             }
             fetchCartItems();
