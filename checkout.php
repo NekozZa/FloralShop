@@ -1,7 +1,7 @@
 <?php
     session_start();
     // $account_id = $_SESSION['account_id'] ?? null;
-    $_SESSION['account_id'] = 2;
+    $_SESSION['account_id'] = 1;
   
 ?>
 
@@ -262,11 +262,11 @@
                                         <label class="custom-control-label" for="shippingOption1">Standard Delivery</label> <span class="float-right font-weight-bold">FREE</span> </div>
                                     <div class="ml-4 mb-2 small">(3-7 business days)</div>
                                     <div class="custom-control custom-radio">
-                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
+                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio" value="10">
                                         <label class="custom-control-label" for="shippingOption2">Express Delivery</label> <span class="float-right font-weight-bold">$10.00</span> </div>
                                     <div class="ml-4 mb-2 small">(2-4 business days)</div>
                                     <div class="custom-control custom-radio">
-                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio">
+                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio" value="20">
                                         <label class="custom-control-label" for="shippingOption3">Next Business day</label> <span class="float-right font-weight-bold">$20.00</span> </div>
                                 </div>
                             </div>
@@ -377,94 +377,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function(){
-            
-            function fetchCartItems(){
-                fetch('./controller/cart_controller.php',{
-                    method: 'GET',
-                    headers:{
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => response.json())
-                .then(responeseData =>{
-                    console.log(responeseData);
-                    if(responeseData.code === 0){
-                        loadCartItems(responeseData.return);
-                        calculateSummary(responeseData.return);
-                    }
-                    else{
-                        alert(responeseData.message);
-                    }
-                })
-            }
-            function loadCartItems(items){
-                const cart = document.getElementById('cart');
-                cart.innerHTML = '';
-
-                if(items.length === 0){
-                    cart.innerHTML = `<p>Your cart is empty. </p>`
-                    return;
-                }
-                items.forEach(item => {
-                    const cartItem = document.createElement('div')
-                    cartItem.classList.add('media', 'mb-2', 'border-bottom');
-                    cartItem.innerHTML =
-                    `<div class="media-body"> 
-                    <a href="detail.html">${item.name}</a>
-                    <div class="small text-muted">Price: $${item.price}<span class="mx-2">|</span> Qty: ${item.quantity}<span class="mx-2">|</span> Subtotal: $${(item.price * item.quantity).toFixed(2)}</div>
-                    </div>`;
-                    cart.appendChild(cartItem);
-
-                });
-            }
-            function calculateSummary(items){
-                //Initialize variables
-                let subtotal = 0;
-                
-                //Testing
-                let discount = 1000; 
-                let couponDiscount = 500; 
-                let tax = 20;
-
-                let shippingCost = 0;
-                let grandtotal = 0;
-
-                let opt1 = document.getElementById('shippingOption1');
-                let opt2 = document.getElementById('shippingOption2');
-                let opt3 = document.getElementById('shippingOption3');
-
-                //Calculate subtotal
-                items.forEach(item => {
-                    subtotal += item.price * item.quantity;
-                });
-                
-
-                //Shipping Cost
-                if(opt1.checked){
-                    shippingCost = opt1.value;
-                }
-                if(opt2.checked){
-                    shippingCost = opt2.value;
-                }
-                if(opt3.checked){
-                    shippingCost = opt3.value;
-                }
-                console.log(shippingCost);
-                grandtotal = ((subtotal - discount -couponDiscount) + tax + shippingCost).toFixed(2);
-                //Show UI
-                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-                document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
-                document.getElementById('coupon-discount').textContent = `$${couponDiscount.toFixed(2)}`;
-                document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-                document.getElementById('shipping').textContent = shippingCost;
-                document.getElementById('total').textContent = `$${grandtotal}`;
-            }
-            fetchCartItems();
-        })
-        
-    </script>
+    <script src="public/js/checkout.js"></script>
 </body>
 
 </html>
