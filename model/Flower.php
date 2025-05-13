@@ -57,5 +57,30 @@
     
             return $flowers;
         }
+
+        public function get_flowers_random($limit){
+            $conn = connect();
+            
+            $sql = "
+                SELECT * 
+                FROM flowers
+                ORDER BY RAND() 
+                LIMIT $limit
+            ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $flowers = [];
+            
+            while ($row = $result->fetch_assoc()) {
+                $flowers[] = $row;
+            }
+
+            $stmt->close();
+            $conn->close();
+
+            return $flowers;
+        }
     }
 ?>

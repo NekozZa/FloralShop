@@ -7,7 +7,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-                <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
+                <a class="navbar-brand" href="index.php" style="letter-spacing: 1rem; text-transform: capitalize;">FlowerShop</a>
             </div>
             <!-- End Header Navigation -->
 
@@ -20,15 +20,12 @@
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                         <ul class="dropdown-menu">
                             <li><a href="shop.php">Sidebar Shop</a></li>
-                            <li><a href="shop-detail.php">Shop Detail</a></li>
                             <li><a href="cart.php">Cart</a></li>
                             <li><a href="checkout.php">Checkout</a></li>
-                            <li><a href="my-account.php">My Account</a></li>
                             <li><a href="wishlist.php">Wishlist</a></li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

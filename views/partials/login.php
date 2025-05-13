@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = mysqli_fetch_assoc($result);
 
     if ($user && password_verify($password, $user['password_hash'])) {
-        $_SESSION['user_id'] = $user['account_id'];
+        $_SESSION['account_id'] = $user['account_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
@@ -57,12 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" action="login.php">
             <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
             <input type="password" name="password" placeholder="Mật khẩu" required><br>
-            <!-- <select name="role" required>
-                <option value="">Select Role</option>
-                <option value="customer">Customer</option>
-                <option value="staff">Staff</option>
-                <option value="admin">Admin</option>
-             </select><br> -->
     <button type="submit">Đăng nhập</button>
         </form>
 

@@ -15,6 +15,11 @@
             $flower_model = new Flower();
             return $flower_model->get_flowers_by_filer($category_id, $sort, $min_price, $max_price);
         }
+
+        function get_flowers_random ($limit) {
+            $flower_model = new Flower();
+            return $flower_model->get_flowers_random($limit);
+        }
     }
 
     $storage_controller = new StorageController();
@@ -28,9 +33,12 @@
 
             $flowers = $storage_controller->get_flowers_by_filter($category_id, $sort, $min_price, $max_price);
             response(0, 'Filtered flowers', $flowers);
+        } else if (isset($_GET['action']) && $_GET['action'] === 'random') {
+            $flowers = $storage_controller->get_flowers_random(4);
+            response(0, 'Random flowers', $flowers);
         } else {
             $flowers = $storage_controller->get_all_flowers();
-            response(0, 'Fetched Products', $flowers);
+            response(0, 'All Flowers', $flowers);
         }
     }
 

@@ -21,7 +21,7 @@
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $error_message = "Tên đăng nhập đã tồn tại!";
+            $error_message = "Username has already existed!";
         } else {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $role = 'customer';
@@ -41,18 +41,18 @@
                 $stmt_customer->bind_param('isss', $account_id, $full_name, $phone, $address);
 
                 if ($stmt_customer->execute()) {
-                    $_SESSION['user_id'] = $account_id;
+                    $_SESSION['account_id'] = $account_id;
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = $role;
 
                     header("Location: " . urldecode($redirect));
                     exit();
                 } else {
-                    $error_message = "Lỗi khi lưu thông tin khách hàng.";
+                    $error_message = "SQL errors";
                 }
                 $stmt_customer->close();
             } else {
-                $error_message = "Lỗi khi tạo tài khoản.";
+                $error_message = "Sql errors";
             }
         }
 
