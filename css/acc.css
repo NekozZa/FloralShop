@@ -39,6 +39,7 @@ input[type="email"] {
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    margin-bottom: 1rem;
 }
 
 button {
@@ -55,6 +56,12 @@ button {
 
 button:hover {
     background-color: #1976D2;
+}
+
+select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 .message {

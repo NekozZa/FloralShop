@@ -57,12 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" action="login.php">
             <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
             <input type="password" name="password" placeholder="Mật khẩu" required><br>
-            <select name="role" required>
-                <option value="">-- Chọn vai trò --</option>
+            <!-- <select name="role" required>
+                <option value="">Select Role</option>
                 <option value="customer">Customer</option>
                 <option value="staff">Staff</option>
                 <option value="admin">Admin</option>
-    </select><br>
+             </select><br> -->
     <button type="submit">Đăng nhập</button>
         </form>
 

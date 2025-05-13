@@ -70,15 +70,15 @@
 </head>
 <body>
     <div class="container">
-        <h2>Đăng ký tài khoản</h2>
+        <h2>Register Account</h2>
         <form method="POST" action="register.php<?php echo isset($_GET['redirect']) ? '?redirect=' . urlencode($_GET['redirect']) : ''; ?>">
-            <input type="text" name="username" placeholder="Tên đăng nhập" required><br>
-            <input type="password" name="password" placeholder="Mật khẩu" required><br>
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
             <input type="email" name="email" placeholder="Email" required><br>
-            <input type="text" name="full_name" placeholder="Họ và tên" required><br>
-            <input type="text" name="phone" placeholder="Số điện thoại" required><br>
-            <input type="text" name="address" placeholder="Địa chỉ" required><br>
-            <button type="submit">Đăng ký</button>
+            <input type="text" name="full_name" placeholder="Full Name" required><br>
+            <input type="text" name="phone" placeholder="Phone Number" required><br>
+            <input type="text" name="address" placeholder="Address" required><br>
+            <button type="submit">Register</button>
         </form>
 
         <?php if (isset($error_message)): ?>
@@ -86,9 +86,9 @@
         <?php endif; ?>
 
         <div class="message">
-            Đã có tài khoản? 
+            Already have account? 
             <a href="login.php<?php echo isset($_GET['redirect']) ? '?redirect=' . urlencode($_GET['redirect']) : ''; ?>">
-                Đăng nhập tại đây
+                Login here
             </a>
         </div>
     </div>
