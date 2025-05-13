@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function(){
         document.getElementById('shipping').textContent = shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`;
         document.getElementById('total').textContent = `$${grandtotal}`;
     }
+    
     const shippingOptions = document.querySelectorAll('input[name="shipping-option"]');
     shippingOptions.forEach(option =>{
         option.addEventListener('change',function(){

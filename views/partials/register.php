@@ -27,23 +27,31 @@
             $role = 'customer';
             $created_at = date('Y-m-d H:i:s');
 
-            $insert_query = "INSERT INTO accounts (username, password_hash, email, role, created_at)
-                            VALUES (?, ?, ?, ?, ?)";
+            $insert_query = "
+                INSERT INTO accounts (username, password_hash, email, role, created_at)
+                VALUES (?, ?, ?, ?, ?)
+            ";
+
             $stmt = $conn->prepare($insert_query);
             $stmt->bind_param('sssss', $username, $password_hash, $email, $role, $created_at);
 
             if ($stmt->execute()) {
                 $account_id = $stmt->insert_id;
 
-                $insert_customer_query = "INSERT INTO customers (account_id, full_name, phone, address)
-                                        VALUES (?, ?, ?, ?)";
+                $insert_customer_query = "
+                    INSERT INTO customers (account_id, full_name, phone, address)
+                    VALUES (?, ?, ?, ?)
+                ";
+
                 $stmt_customer = $conn->prepare($insert_customer_query);
                 $stmt_customer->bind_param('isss', $account_id, $full_name, $phone, $address);
+                $customer_id = $stmt_customer->insert_id;
 
                 if ($stmt_customer->execute()) {
                     $_SESSION['account_id'] = $account_id;
                     $_SESSION['username'] = $username;
                     $_SESSION['role'] = $role;
+                    $_SESSION['customer_id'] = $customer_id;
 
                     header("Location: " . urldecode($redirect));
                     exit();

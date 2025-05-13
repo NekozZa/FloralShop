@@ -10,7 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn = connect();
 
-    $sql = "SELECT * FROM accounts WHERE username = ?";
+    $sql = "
+        SELECT * 
+        FROM accounts
+        WHERE username = ?
+    ";
+
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
@@ -21,11 +26,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['account_id'] = $user['account_id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
-
+        
         if (isset($_GET['redirect'])) {
             header('Location: ' . urldecode($_GET['redirect']));
         } else {
             if ($user['role'] == 'customer') {
+                $sql = "
+                    SELECT * 
+                    FROM customers
+                    WHERE account_id = ?
+                ";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('i', $user['account_id']);
+                $stmt->execute();
+                $res = $stmt->get_result();
+                $data = $res->fetch_assoc();
+                $customer_id = $data['customer_id'];
+
+                $_SESSION['customer_id'] = $customer_id;
+
                 header('Location: ../../index.php');
             } elseif ($user['role'] == 'admin') {
                 header('Location: ../../admin.php');

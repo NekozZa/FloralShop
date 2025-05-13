@@ -1,5 +1,13 @@
 <?php 
-   session_start();
+    session_start();
+
+    var_dump($_SESSION['customer_id']);
+
+    // if (isset($_SESSION['role']) && $_SESSION['role'] === 'staff') {
+    //     header('Location: staff.php');
+    // } else if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+    //     header('Location: admin.php');
+    // }
 ?>
 
 <!DOCTYPE html>

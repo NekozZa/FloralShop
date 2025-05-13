@@ -137,11 +137,11 @@
                             <div class="title"> <span>Payment</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                    <input id="credit" name="paymentMethod" value="bank-transfer" type="radio" class="custom-control-input" checked required>
                                     <label class="custom-control-label" for="credit">Bank Transfer</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <input id="debit" name="paymentMethod" value="direct-transfer" type="radio" class="custom-control-input" required>
                                     <label class="custom-control-label" for="debit">Direct Transfer</label>
                                 </div>
                             </div>
