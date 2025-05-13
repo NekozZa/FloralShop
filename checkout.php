@@ -1,4 +1,4 @@
-<?php
+<button?php
     session_start();
     // $account_id = $_SESSION['account_id'] ?? null;
     $_SESSION['account_id'] = 1;
@@ -334,7 +334,7 @@
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <a href="checkout.html" class="ml-auto btn hvr-hover">Place Order</a> </div>
+                        <div class="col-12 d-flex shopping-box"> <button id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</button> </div>
                     </div>
                 </div>
             </div>

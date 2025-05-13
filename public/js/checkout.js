@@ -50,10 +50,13 @@ document.addEventListener("DOMContentLoaded", function(){
         let grandtotal = 0
         let opt1 = document.getElementById('shippingOption1');
         let opt2 = document.getElementById('shippingOption2');
-        let opt3 = document.getElementById('shippingOption3')
+        let opt3 = document.getElementById('shippingOption3');
+
+        let totalProduct = 0;
         //Calculate subtotal
         items.forEach(item => {
             subtotal += item.price * item.quantity;
+            totalProduct += item.quantity;
         });
     
         //Shipping Cost
@@ -83,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function(){
         })
     })
     fetchCartItems();
+
+    const placeOrderButton = document.getElementById('place-order-btn');
+    placeOrderButton.addEventListener('click', function(){
+        
+    })
+    
 })
 
     
