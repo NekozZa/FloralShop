@@ -4,7 +4,6 @@
     session_start();
     header('Content-Type: application/json');
 
-
     class RequestController {
         
         function create_refund_request($orderID, $customerID, $reason) {

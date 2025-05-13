@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: May 11, 2025 at 05:09 AM
+=======
+-- Generation Time: Apr 27, 2025 at 01:44 PM
+>>>>>>> login
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +24,11 @@ SET time_zone = "+00:00";
 --
 -- Database: `floral_shop`
 --
+<<<<<<< HEAD
+=======
+CREATE DATABASE IF NOT EXISTS `floral_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `floral_shop`;
+>>>>>>> login
 
 -- --------------------------------------------------------
 
@@ -36,6 +45,7 @@ CREATE TABLE `accounts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+<<<<<<< HEAD
 --
 -- Dumping data for table `accounts`
 --
@@ -43,6 +53,8 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`account_id`, `username`, `password_hash`, `email`, `role`, `created_at`) VALUES
 (1, 'bob', '234', 'bob234@example.com', '', '2025-05-09 14:51:59');
 
+=======
+>>>>>>> login
 -- --------------------------------------------------------
 
 --
@@ -58,6 +70,7 @@ CREATE TABLE `albums` (
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `cart`
 --
 
@@ -121,6 +134,8 @@ INSERT INTO `category` (`category_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+=======
+>>>>>>> login
 -- Table structure for table `customers`
 --
 
@@ -144,6 +159,7 @@ CREATE TABLE `flowers` (
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock_quantity` int(11) DEFAULT 0,
+<<<<<<< HEAD
   `image_url` varchar(255) DEFAULT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -164,6 +180,11 @@ INSERT INTO `flowers` (`flower_id`, `name`, `description`, `price`, `stock_quant
 (9, 'Camellia', 'Classic camellia, elegant appearance', 65000.00, 35, 'images/flower-img-9.jpg', 2),
 (10, 'Hydrangea', 'Color-changing flower with charm', 55000.00, 60, 'images/flower-img-10.jpg', 3);
 
+=======
+  `image_url` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+>>>>>>> login
 -- --------------------------------------------------------
 
 --
@@ -263,6 +284,7 @@ CREATE TABLE `staff` (
   `phone` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+<<<<<<< HEAD
 -- --------------------------------------------------------
 
 --
@@ -285,6 +307,8 @@ INSERT INTO `wishlist` (`wishlist_id`, `account_id`, `flower_id`) VALUES
 (13, 1, 2),
 (18, 1, 1);
 
+=======
+>>>>>>> login
 --
 -- Indexes for dumped tables
 --
@@ -304,6 +328,7 @@ ALTER TABLE `albums`
   ADD PRIMARY KEY (`album_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
@@ -325,6 +350,8 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
+=======
+>>>>>>> login
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -335,8 +362,12 @@ ALTER TABLE `customers`
 -- Indexes for table `flowers`
 --
 ALTER TABLE `flowers`
+<<<<<<< HEAD
   ADD PRIMARY KEY (`flower_id`),
   ADD KEY `category_id` (`category_id`);
+=======
+  ADD PRIMARY KEY (`flower_id`);
+>>>>>>> login
 
 --
 -- Indexes for table `flower_album`
@@ -392,6 +423,7 @@ ALTER TABLE `staff`
   ADD KEY `account_id` (`account_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -400,6 +432,8 @@ ALTER TABLE `wishlist`
   ADD KEY `flower_id` (`flower_id`);
 
 --
+=======
+>>>>>>> login
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -407,7 +441,11 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
+<<<<<<< HEAD
   MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> login
 
 --
 -- AUTO_INCREMENT for table `albums`
@@ -416,6 +454,7 @@ ALTER TABLE `albums`
   MODIFY `album_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+<<<<<<< HEAD
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
@@ -434,6 +473,8 @@ ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+=======
+>>>>>>> login
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
@@ -443,7 +484,11 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `flowers`
 --
 ALTER TABLE `flowers`
+<<<<<<< HEAD
   MODIFY `flower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+=======
+  MODIFY `flower_id` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> login
 
 --
 -- AUTO_INCREMENT for table `flower_album`
@@ -488,16 +533,20 @@ ALTER TABLE `staff`
   MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+<<<<<<< HEAD
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
   MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+=======
+>>>>>>> login
 -- Constraints for dumped tables
 --
 
 --
+<<<<<<< HEAD
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
@@ -511,18 +560,23 @@ ALTER TABLE `cart_item`
   ADD CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`flower_id`) REFERENCES `flowers` (`flower_id`);
 
 --
+=======
+>>>>>>> login
 -- Constraints for table `customers`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE;
 
 --
+<<<<<<< HEAD
 -- Constraints for table `flowers`
 --
 ALTER TABLE `flowers`
   ADD CONSTRAINT `flowers_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 
 --
+=======
+>>>>>>> login
 -- Constraints for table `flower_album`
 --
 ALTER TABLE `flower_album`
@@ -567,6 +621,7 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `staff`
   ADD CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE;
+<<<<<<< HEAD
 
 --
 -- Constraints for table `wishlist`
@@ -574,6 +629,8 @@ ALTER TABLE `staff`
 ALTER TABLE `wishlist`
   ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`flower_id`) REFERENCES `flowers` (`flower_id`) ON DELETE CASCADE;
+=======
+>>>>>>> login
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

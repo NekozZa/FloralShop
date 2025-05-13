@@ -105,8 +105,11 @@
      padding: 12px 40px;
      font-size: 16px;
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> login
  .lead {
      font-size: 18px;
      line-height: 30px;
@@ -2191,7 +2194,11 @@
 }
  .new-account-login h5 {
      font-size: 18px;
+<<<<<<< HEAD
      color: #111111;
+=======
+     color: #1111111;
+>>>>>>> login
      font-weight: 600;
 }
  .new-account-login h5 a:hover{

@@ -1,7 +1,5 @@
 <?php 
-    if (!isset($_SESSION['account_id'])) {
-        $_SESSION['account_id'] = 1;
-    }
+   session_start();
 ?>
 
 <!DOCTYPE html>
@@ -194,6 +192,7 @@
                         <div class="why-text">
                             <h4>Lorem ipsum dolor sit amet</h4>
                             <h5> $7.79</h5>
+
                         </div>
                     </div>
                 </div>
@@ -220,7 +219,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6 special-grid top-featured">
                     <div class="products-single fix">
                         <div class="box-img-hover">

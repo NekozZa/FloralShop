@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 GitHub: https://github.com/NekozZa/FloralShop.git
 
 
@@ -71,3 +72,78 @@ Verify Order (use case):
  - Different order must be spaced out
   
 
+=======
+GitHub: https://github.com/NekozZa/FloralShop.git
+
+
+all the .php files related to logic must be in controller/ folder. Reference to lab9. To know how to structure the files. However instead of separating each file like the lab09 in web. All related GET, POST, DELETE, PUT need to be in only one .php file.
+
+Vu
+Design database
+Design admin interface
+Request Refund
+View Sale Performance
+
+
+Truc
+Buy Flower (use case):
+ - Display the flowers cart in the checkout.php for that user
+ - Calculate the total product using javascript
+ - Animation for creating order successfully
+ - Create an order that with products in cart, then stores it in the database
+ - 2 Payment method:
+  + QR coode (simulate the transaction only).
+  + Direct transfer
+
+Manage Order (use case)
+ - Collaborate with Vu
+ - Get all orders and display them
+ - Also get the status of the order
+ - Display the payment method and whether it is paid or not.
+ - If the order is placed, but the customer no longer want to buy it. A remove button is required so that staff can delete the order. Update the database accordingly. (remove order)
+ - If the order is placed, but the customer want to add or remove products in that order. The staff needs to help them to change the order.
+ 
+Manage Staff (use case)
+ - all crud
+
+Tuan
+Find images flower
+Browse Flower (use case):
+ - Sort
+ - Filter
+ - Display number of results
+ - Get flowers from database and display them 
+ - Add to wishlist 
+ - Add to cart
+ - Animation for adding item to both wishlist/cart successfully
+Verify Reason:
+ - Contact with Bao to design the staff interface
+ - Get refunds and display the refunds in the database.
+ - Respond to customer via phpmailer.
+ - If the refund is accepted:
+  + a mail is automatically sent to the customer via their email. Contains:
+   . The result
+   . Period to receive money back (on success only)
+
+
+Bao
+Login (use case):
+ - Sign up
+ - Sign in
+ - hash password to protect user
+ - phpMailer to verify the user
+
+Verify Order (use case):
+ - Design an interface for the staff
+ - Getting pending orders
+ - The order must show:
+  + Ordered date
+  + What are products in that order
+   . name
+   . quantity
+  + From which customer
+ - Differnt products with the same order must be grouped
+ - Different order must be spaced out
+  
+
+>>>>>>> login

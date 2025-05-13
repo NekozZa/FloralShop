@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+<?php session_start(); ?>
+
+<?php
+function getCurrentUrl() {
+    return "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+}
+?>
+
+>>>>>>> login
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
