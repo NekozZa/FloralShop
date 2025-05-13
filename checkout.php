@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    // $account_id = $_SESSION['account_id'] ?? null;
+    $_SESSION['account_id'] = 1;
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -255,11 +262,11 @@
                                         <label class="custom-control-label" for="shippingOption1">Standard Delivery</label> <span class="float-right font-weight-bold">FREE</span> </div>
                                     <div class="ml-4 mb-2 small">(3-7 business days)</div>
                                     <div class="custom-control custom-radio">
-                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
+                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio" value="10">
                                         <label class="custom-control-label" for="shippingOption2">Express Delivery</label> <span class="float-right font-weight-bold">$10.00</span> </div>
                                     <div class="ml-4 mb-2 small">(2-4 business days)</div>
                                     <div class="custom-control custom-radio">
-                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio">
+                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio" value="20">
                                         <label class="custom-control-label" for="shippingOption3">Next Business day</label> <span class="float-right font-weight-bold">$20.00</span> </div>
                                 </div>
                             </div>
@@ -269,9 +276,10 @@
                                 <div class="title-left">
                                     <h3>Shopping cart</h3>
                                 </div>
-                                <div class="rounded p-2 bg-light">
-                                    <div class="media mb-2 border-bottom">
-                                        <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
+                                <div class="rounded p-2 bg-light" id="cart">
+                                    <!-- <div class="media mb-2 border-bottom">
+                                        <div class="media-body">
+                                            <a href="detail.html">Item name</a>
                                             <div class="small text-muted">Price: $80.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $80.00</div>
                                         </div>
                                     </div>
@@ -284,7 +292,7 @@
                                         <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
                                             <div class="small text-muted">Price: $40.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $40.00</div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -300,29 +308,29 @@
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                    <div id="subtotal" class="ml-auto font-weight-bold"></div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 40 </div>
+                                    <div id="discount" class="ml-auto font-weight-bold"> </div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Coupon Discount</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 10 </div>
+                                    <div id="coupon-discount" class="ml-auto font-weight-bold">  </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Tax</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 2 </div>
+                                    <div id="tax" class="ml-auto font-weight-bold">  </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Shipping Cost</h4>
-                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                    <div id="shipping" class="ml-auto font-weight-bold"> Free </div>
                                 </div>
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Grand Total</h5>
-                                    <div class="ml-auto h5"> $ 388 </div>
+                                    <div id="total" class="ml-auto h5"></div>
                                 </div>
                                 <hr> </div>
                         </div>
@@ -368,6 +376,8 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+    <script src="public/js/checkout.js"></script>
 </body>
 
 </html>
