@@ -1,8 +1,8 @@
-<button?php
+<?php
     session_start();
-    // $account_id = $_SESSION['account_id'] ?? null;
+    $account_id = $_SESSION['account_id'] ?? null;
     $_SESSION['account_id'] = 1;
-  
+    
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
-
+    
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -334,12 +334,47 @@
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <button id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</button> </div>
+                        <div class="col-12 d-flex shopping-box"> 
+                            <button onclick="placeOrder(<?= $_SESSION  ['account_id']?>)" id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</button> 
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
+    </div>
+
+    <!-- Modal Success -->
+    <div class="modal fade" id="orderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderSuccessModalLabel">Order Successful</h5>
+          </div>
+          <div class="modal-body">
+            <p>Your order has been placed successfully!</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Error -->
+    <div class="modal fade" id="orderErrorModal" tabindex="-1" role="dialog" aria-labelledby="orderErrorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title text-danger" id="orderErrorModalLabel">Order Failed</h5>
+          </div>
+          <div class="modal-body">
+            <p>There was an error placing your order. Please try again.</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- End Cart -->
 
@@ -378,6 +413,9 @@
     <script src="js/custom.js"></script>
 
     <script src="public/js/checkout.js"></script>
+    <script>
+        
+    </script>
 </body>
 
 </html>

@@ -2,7 +2,6 @@
     require_once '../model/Order.php';
     session_start();
     header('Content-Type: application/json');
-
     class OrderController {
         public function place_order($account_id,$cart_items,$total_amount){
             $order_model = new Order();
@@ -10,14 +9,15 @@
         }
     }
 
-    $cart_controller = new OrderController();
+    $order_controller = new OrderController();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['account_id'])) {
             response(1, 'You must be logged in to place an order');
         }
+        $input = json_decode(file_get_contents('php://input',true));
         $account_id = $_SESSION['account_id'];
-        $cart_items = $_POST['cart_items'] ?? null;
-        $total_amount = $_POST['total_amount'] ?? null;
+        $cart_items = $input->cart_items ?? null;
+        $total_amount = $input->total_amount ?? null;
 
         if($cart_items === null || $total_amount === null){
             response(1, 'Cart is empty');

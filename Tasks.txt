@@ -27,7 +27,7 @@ Manage Order (use case)
  - Display the payment method and whether it is paid or not.
  - If the order is placed, but the customer no longer want to buy it. A remove button is required so that staff can delete the order. Update the database accordingly. (remove order)
  - If the order is placed, but the customer want to add or remove products in that order. The staff needs to help them to change the order.
- 
+
 Manage Staff (use case)
  - all crud
 

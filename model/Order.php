@@ -2,12 +2,21 @@
     require_once('../database.php');
 
     class Order { 
-        public function create_order($customer_id,$cart_items,$total_amount){
+        public function create_order($account_id,$cart_items,$total_amount){
             $conn = connect();
             
-            $sql = "INSERT INTO orders(customer_id,total_amount,order_date,status) VALUES(?,?,now(),'pending')";
-            $stm = $conn->prepare($sql);
-            $stm ->bind_param("ii", $customer_id,$total_amount);
+            $sql_customer = "SELECT customer_id FROM customers WHERE account_id = ?";
+            $stm_customer = $conn->prepare($sql_customer);
+            $stm_customer->bind_param("i", $account_id);
+            $stm_customer->execute();
+            $result_customer = $stm_customer->get_result();
+            $customer_id = $result_customer->fetch_assoc()['customer_id'];
+            $stm_customer->close();
+
+            
+            $sql_order = "INSERT INTO orders(customer_id,total_amount,order_date,status) VALUES(?,?,now(),'pending')";
+            $stm = $conn->prepare($sql_order);
+            $stm ->bind_param("id", $customer_id,$total_amount);
             if($stm->execute()){
                 $order_id = $conn->insert_id;
             } 
@@ -16,16 +25,27 @@
                 $conn->close();
                 return false;
             }
-            $sql_item = "INSERT INTO order_items(order_id,flower_id,quantity,price_each) VALUES(?,?,?)";
+
+
+            $sql_item = "INSERT INTO order_items(order_id,flower_id,quantity,price_each) VALUES(?,?,?,?)";
             $stm_item = $conn->prepare($sql_item);
+            
             foreach($cart_items as $item){
-                $stm_item->bind_param("iiid", $order_id, $item['flower_id'], $item['quantity'], $item['price']);
+                $stm_item->bind_param("iiid", $order_id, $item->flower_id, $item->quantity, $item->price);
                 $stm_item->execute();
             }
-            $conn->commit();
+
+
+            $sql_empty = 'DELETE FROM cart_item WHERE cart_id = (SELECT cart_id FROM cart WHERE account_id = ?)';
+            $stm_empty = $conn->prepare($sql_empty);
+            $stm_empty ->bind_param("i",$account_id);
+            $stm_empty->execute();
+
+            $stm_empty->close();
             $stm->close();
             $stm_item->close();
             $conn->close();
+            return $order_id;
         }
     }
 ?>

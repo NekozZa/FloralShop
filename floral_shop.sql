@@ -135,6 +135,14 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+--
+-- Dumping data for table `customers`
+--
+
+
+INSERT INTO customers (account_id, full_name, phone, address)
+VALUES (1, 'Bob Example', '1234567890', '123 Floral Street');
+
 
 --
 -- Table structure for table `flowers`
