@@ -2,16 +2,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <!-- <div class="custom-select-box">
-                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                        <option>¥ JPY</option>
-                        <option>$ USD</option>
-                        <option>€ EUR</option>
-                    </select>
-                </div>
-                <div class="right-phone-box">
-                    <p>Call US :- <a href="#"> +11 900 800 100</a></p>
-                </div> -->
                 <div class="our-link">
                     <ul>
                         <li><a href="my-account.php"><i class="fa fa-user s_color"></i> My Account</a></li>
@@ -20,7 +10,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
-                    <?php if (!isset($_SESSION['user_id'])): ?>
+                    <?php if (!isset($_SESSION['account_id'])): ?>
                         <select id="loginDropdown" class="selectpicker show-tick form-control" data-placeholder="Sign In">
                             <option selected disabled>Sign In</option>
                             <option value="views/partials/register.php">Register Here</option>

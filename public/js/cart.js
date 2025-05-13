@@ -2,7 +2,6 @@ const tableWishList = document.querySelector('#tableCartList tbody')
 fetch(`./controller/cart_controller.php`)
 .then(res => res.json())
 .then(data => {
-    console.log(data)
     if(data.code == 0){
         let product = ''
         let listProducts = data.return
