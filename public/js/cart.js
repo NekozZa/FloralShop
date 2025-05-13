@@ -61,6 +61,7 @@ document.addEventListener('click', function(e){
         })
         .catch(error => console.error('Error:', error));
     }
+    
     if(e.target.closest('.update-box')){
         const btn = e.target.closest('.removeRow');
         e.stopPropagation()
