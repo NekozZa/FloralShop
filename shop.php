@@ -162,7 +162,12 @@
 
     <!-- Start Instagram Feed  -->
     <!-- End Instagram Feed  -->
-
+    <div class="cart-notification" id="cartNotification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span>Added Successfully!</span>
+        </div>
+    </div>
 
     <!-- Start Footer  -->
     <?php include './views/partials/footer.php' ?>
@@ -196,8 +201,8 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="public/js/shop.js"></script>
     <script src="public/js/cart_wishlist.js"></script>
+    <script src="public/js/shop.js"></script>
     <link rel="stylesheet" href="css/animation.css">
 </body>
 

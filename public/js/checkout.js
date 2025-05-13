@@ -1,6 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", function(){
-    
     function fetchCartItems(){
         fetch('./controller/cart_controller.php',{
             method: 'GET',
@@ -20,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         })
     }
+
     function loadCartItems(items){
         const cart = document.getElementById('cart');
         cart.innerHTML = ''
@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function(){
             fetchCartItems();
         })
     })
+    
     fetchCartItems();
 })
 

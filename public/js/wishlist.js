@@ -30,7 +30,13 @@ fetch(`./controller/wishlist_controller.php`, {method: 'GET'})
                     </td>
                     <td class="quantity-box">${element.stock_quantity}</td>
                     <td class="add-pr">
-                        <a class="btn hvr-hover add-to-cart" href="#" data-product-id="${element.flower_id}">Add to Cart</a>
+                        <a 
+                            class="btn hvr-hover add-to-cart" 
+                            href="#" 
+                            onclick="addToCart(event, ${element.flower_id})"
+                        >
+                            Add to Cart
+                        </a>
                     </td>
                     <td>
                         <a href="#" class = "removeRow" data-product-id="${element.wishlist_id}">

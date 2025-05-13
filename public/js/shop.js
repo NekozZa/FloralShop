@@ -56,20 +56,12 @@ function sortFilterFlowers(categoryId = '', type ='', min_price='', max_price=''
 
 function displayFlowers(flowers){
     const flowerList = document.getElementById('flowerList');
-    
     flowerList.innerHTML = '';
-    
     flowers.forEach(flower => {
         const productDiv = document.createElement('div');
         productDiv.className = 'col-sm-6 col-md-6 col-lg-4 col-xl-4';
         productDiv.innerHTML = `
             <div class="products-single fix">
-                <div class="cart-notification" id="cartNotification">
-                    <div class="notification-content">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Added Successfully!</span>
-                    </div>
-                </div>
                 <div class="box-img-hover">
                     <div class="type-lb">
                         <p class="sale">Sale</p>
@@ -78,11 +70,25 @@ function displayFlowers(flowers){
                     <div class="mask-icon">
                         <ul>
                             <li><a href="#" title="View"><i class="fas fa-eye"></i></a></li>
-                            <li><a href="#" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                            <li><a href="#"  data-placement="right"  data-product-id="${flower.flower_id}" class ="add-to-wishlist">
-                                <i class="far fa-heart"></i></a></li>
+                            <li>
+                                <a 
+                                    href="#"  
+                                    data-placement="right"  
+                                    class ="add-to-wishlist"
+                                    onclick="addToWishlist(event, ${flower.flower_id})"   
+                                >
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </li>
                         </ul>
-                        <a class="cart add-to-cart" href="#" data-product-id="${flower.flower_id}">Add to Cart</a>
+
+                        <a 
+                            class="cart add-to-cart" 
+                            href="#"
+                            onclick="addToCart(event, ${flower.flower_id})" 
+                        >
+                            Add to Cart
+                        </a>
                     </div>
                 </div>
                 <div class="why-text full-width">
@@ -90,7 +96,6 @@ function displayFlowers(flowers){
                     <h5> <del>$ ${flower.price}</del> $ ${flower.price - 10000}</h5>
                 </div>
             </div>
-            
         `;
         flowerList.appendChild(productDiv);
     })
@@ -104,34 +109,49 @@ function listViewFlowers(flowers){
     flowers.forEach(flower =>{
         const listViewBox = document.createElement('div')
         listViewBox.className = 'list-view-box'
-        listViewBox.innerHTML = `<div class="row">
-                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                        <div class="products-single fix">
-                                            <div class="box-img-hover">
-                                                <div class="type-lb">
-                                                    <p class="new">New</p>
-                                                </div>
-                                                <img src="${flower.image_url}" class="img-fluid" alt="Image">
-                                                <div class="mask-icon">
-                                                    <ul>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                        <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                        <li><a data-toggle="tooltip" data-placement="right" title="Add to Wishlist" data-product-id="${flower.flower_id}" class ="add-to-wishlist">
-                                                            <i class="far fa-heart"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
-                                        <div class="why-text full-width">
-                                            <h4>${flower.name}</h4>
-                                            <h5> <del>$ ${flower.price}</del> $ ${flower.price - 10000}</h5>
-                                            <p>${flower.description}</p>
-                                            <a class="btn hvr-hover" href="#">Add to Cart</a>
-                                        </div>
-                                    </div>
-                                </div>`
+        listViewBox.innerHTML = `
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">New</p>
+                            </div>
+                            <img src="${flower.image_url}" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                    <li>
+                                        <a 
+                                            data-toggle="tooltip" data-placement="right" 
+                                            title="Add to Wishlist" 
+                                            class ="add-to-wishlist"
+                                            onclick="addToWishlist(event, ${flower.flower_id})"
+                                        >
+                                            <i class="far fa-heart"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                    <div class="why-text full-width">
+                        <h4>${flower.name}</h4>
+                        <h5> <del>$ ${flower.price}</del> $ ${flower.price - 10000}</h5>
+                        <p>${flower.description}</p>
+                        <a 
+                            class="cart add-to-cart" 
+                            href="#"
+                            onclick="addToCart(event, ${flower.flower_id})" 
+                        >
+                            Add to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>`
         
         listView.appendChild(listViewBox)
     })

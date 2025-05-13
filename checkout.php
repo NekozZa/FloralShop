@@ -1,8 +1,5 @@
 <?php
     session_start();
-    // $account_id = $_SESSION['account_id'] ?? null;
-    $_SESSION['account_id'] = 1;
-  
 ?>
 
 <!DOCTYPE html>
