@@ -429,9 +429,6 @@
     <script src="js/custom.js"></script>
 
     <script src="public/js/checkout.js?v=7"></script>
-    <script>
-        
-    </script>
 </body>
 
 </html>
