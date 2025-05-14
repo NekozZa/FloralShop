@@ -10,16 +10,16 @@
                 FROM flowers
             ";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $stm = $conn->prepare($sql);
+            $stm->execute();
+            $result = $stm->get_result();
             $flowers = [];
             
             while ($row = $result->fetch_assoc()) {
                 $flowers[] = $row;
             }
 
-            $stmt->close();
+            $stm->close();
             $conn->close();
 
             return $flowers;
@@ -68,16 +68,16 @@
                 LIMIT $limit
             ";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result();
+            $stm = $conn->prepare($sql);
+            $stm->execute();
+            $result = $stm->get_result();
             $flowers = [];
             
             while ($row = $result->fetch_assoc()) {
                 $flowers[] = $row;
             }
 
-            $stmt->close();
+            $stm->close();
             $conn->close();
 
             return $flowers;
@@ -86,19 +86,19 @@
             $conn = connect();
 
             $sql_flower = "SELECT * FROM flowers WHERE flower_id = ?";
-            $stmt_flower = $conn->prepare($sql_flower);
-            $stmt_flower->bind_param("i", $flower_id);
-            $stmt_flower->execute();
-            $delete_flower = $stmt_flower->get_result()->fetch_assoc();
+            $stm_flower = $conn->prepare($sql_flower);
+            $stm_flower->bind_param("i", $flower_id);
+            $stm_flower->execute();
+            $delete_flower = $stm_flower->get_result()->fetch_assoc();
 
             $sql = "DELETE FROM flowers WHERE flower_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $flower_id);
-            $stmt->execute();
+            $stm = $conn->prepare($sql);
+            $stm->bind_param("i", $flower_id);
+            $stm->execute();
 
 
-            $stmt_flower->close(); 
-            $stmt->close();
+            $stm_flower->close(); 
+            $stm->close();
             $conn->close();
             return $delete_flower;
         }
@@ -106,11 +106,11 @@
             $conn = connect();
             
             $sql = "UPDATE flowers SET name = ?, description = ?, price = ?, stock_quantity = ? WHERE flower_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssiii", $name, $description,$price, $stock_quantity,$flower_id);
+            $stm = $conn->prepare($sql);
+            $stm->bind_param("ssiii", $name, $description,$price, $stock_quantity,$flower_id);
 
-            $stmt->execute();
-            $stmt->close();
+            $stm->execute();
+            $stm->close();
             $conn->close();
 
             return $flower_id;
@@ -121,15 +121,15 @@
 
         
             $sql_category = "SELECT category_id FROM category WHERE category_id = ?";
-            $stmt_category = $conn->prepare($sql_category);
-            $stmt_category->bind_param("i", $category_id);
-            $stmt_category->execute();
-            if ($stmt_category->get_result()->num_rows === 0) {
-                $stmt_category->close();
+            $stm_category = $conn->prepare($sql_category);
+            $stm_category->bind_param("i", $category_id);
+            $stm_category->execute();
+            if ($stm_category->get_result()->num_rows === 0) {
+                $stm_category->close();
                 $conn->close();
                 return false; 
         }
-            $stmt_category->close();
+            $stm_category->close();
 
             $image_url = null;
             if ($image && isset($image['name']) && !empty($image['name'])) {
@@ -146,14 +146,13 @@
                 return false; 
             }
         }
-
             $sql = "INSERT INTO flowers (name, description, price, stock_quantity, category_id, image_url) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssdiss", $name, $description, $price, $stock_quantity, $category_id, $image_url);
-            $result = $stmt->execute();
+            $stm = $conn->prepare($sql);
+            $stm->bind_param("ssdiss", $name, $description, $price, $stock_quantity, $category_id, $image_url);
+            $result = $stm->execute();
             $flower_id = $conn->insert_id;
 
-            $stmt->close();
+            $stm->close();
             $conn->close();
             return $flower_id;
         }
