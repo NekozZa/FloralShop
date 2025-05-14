@@ -1,11 +1,11 @@
-<div class="bg-light p-0 flex-fill" style="">
+<div class="bg-light p-0 flex-fill h-auto" style="">
     <nav class='bg-white shadow d-flex align-items-center justify-content-between' style='height: 10%'>
         <span class="ms-3">Order Management</span>
         <button class="btn btn-outline-danger me-3" onclick="logOut()">Log out</button>
     </nav>
 
-    <div class="container p-5" style='height: 90%'>
-        <div class="mb-4 d-flex justify-content-end">
+    <div class="container px-5 h-auto">
+        <div class="mb-4 d-flex justify-content-end mt-3">
             <button class="btn btn-success" onclick="openAddModal()">Add New Product</button>
         </div>
         <div id="product-list" class="row">

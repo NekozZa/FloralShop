@@ -41,7 +41,7 @@
         }
     </style>
 </head>
-<body style='height: 100vh'>
+<body style='min-height: 100vh; height: 100vh'>
     <div class="container-fluid h-100">
         <div class="row d-flex flex-nowrap h-100">
             <div class="bg-dark p-3 w-auto" style="width: 10%;">
