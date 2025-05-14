@@ -3,19 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: May 11, 2025 at 05:09 AM
-=======
--- Generation Time: Apr 27, 2025 at 01:44 PM
->>>>>>> login
+-- Generation Time: May 14, 2025 at 08:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
--- CREATE DATABASE IF NOT EXISTS floral_shop;
--- USE floral_shop;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,18 +20,14 @@ SET time_zone = "+00:00";
 --
 -- Database: `floral_shop`
 --
-<<<<<<< HEAD
-=======
 CREATE DATABASE IF NOT EXISTS `floral_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `floral_shop`;
->>>>>>> login
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `accounts`
 --
-
 
 CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL,
@@ -47,16 +38,18 @@ CREATE TABLE `accounts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-<<<<<<< HEAD
 --
 -- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`account_id`, `username`, `password_hash`, `email`, `role`, `created_at`) VALUES
-(1, 'bob', '234', 'bob234@example.com', '', '2025-05-09 14:51:59');
+(1, 'bob', '$2y$10$GWMccSMsLvwPxaJPd1xm8eDuROw0Hh0ryZbDKU1YDc.OpVkjx8YF2', 'nguyenvana@example.com', 'customer', '2025-05-12 01:25:43'),
+(2, 'IceAmericano', '$2y$10$XozdDXELTQWGcNg2.R44Kec1ANhAna1qrz7u50pf1MBC7l8Qbnzm6', 'kakakaaa1234567@gmail.com', 'staff', '2025-05-11 02:01:35'),
+(6, 'admin', '$2y$10$pKYgsQMnKOPeGUsgqaOsMuZ/giYMnqh8zmgTJH7QbGcWYTSn0IMae', 'admin@gmail.com', 'admin', '2025-05-13 06:13:17'),
+(7, 'alice', '$2y$10$/GaE4cm3GwF4BCqQ31GxfeUJ0SZaUMn6642mlYwtkXBfYwIJMA4hG', 'alice@gmail.com', 'customer', '2025-05-13 09:51:09'),
+(9, 'gaytun', '$2y$10$cK/7T.dffrAAaNqONUfRgO5Nu5pW7XSxCE6tHEZEJybEJRDSNNq8O', 'gaytun@gmail.com', 'staff', '2025-05-14 03:13:04'),
+(10, 'haygieu', '$2y$10$uJkR9cyMmEMt8oUbDLTsIenubBJnv1Aa4gP6Pwcc7RfSb2muNnKAm', 'haygieu@gmail.com', 'staff', '2025-05-14 03:13:04');
 
-=======
->>>>>>> login
 -- --------------------------------------------------------
 
 --
@@ -72,7 +65,6 @@ CREATE TABLE `albums` (
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
 -- Table structure for table `cart`
 --
 
@@ -86,7 +78,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `account_id`) VALUES
-(2, 1);
+(5, 1),
+(6, 7);
 
 -- --------------------------------------------------------
 
@@ -106,8 +99,11 @@ CREATE TABLE `cart_item` (
 --
 
 INSERT INTO `cart_item` (`cartitemId`, `cart_id`, `flower_id`, `quantity`) VALUES
-(8, 2, 4, 1),
-(9, 2, 5, 5);
+(17, 5, 5, 1),
+(18, 5, 1, 3),
+(19, 5, 3, 1),
+(20, 6, 2, 1),
+(21, 6, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -136,8 +132,6 @@ INSERT INTO `category` (`category_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
-=======
->>>>>>> login
 -- Table structure for table `customers`
 --
 
@@ -148,6 +142,13 @@ CREATE TABLE `customers` (
   `phone` varchar(20) DEFAULT NULL,
   `address` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`customer_id`, `account_id`, `full_name`, `phone`, `address`) VALUES
+(1, 7, 'alice', 'nguyen', '69 Mai Chí Thọ, Phường An Phú, Quận 2, Sài Gòn');
 
 -- --------------------------------------------------------
 
@@ -161,7 +162,6 @@ CREATE TABLE `flowers` (
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock_quantity` int(11) DEFAULT 0,
-<<<<<<< HEAD
   `image_url` varchar(255) DEFAULT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -182,11 +182,6 @@ INSERT INTO `flowers` (`flower_id`, `name`, `description`, `price`, `stock_quant
 (9, 'Camellia', 'Classic camellia, elegant appearance', 65000.00, 35, 'images/flower-img-9.jpg', 2),
 (10, 'Hydrangea', 'Color-changing flower with charm', 55000.00, 60, 'images/flower-img-10.jpg', 3);
 
-=======
-  `image_url` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
->>>>>>> login
 -- --------------------------------------------------------
 
 --
@@ -213,6 +208,16 @@ CREATE TABLE `orders` (
   `status` enum('pending','completed','cancelled','refunded') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `total_amount`, `status`) VALUES
+(2, 1, '2025-05-13 14:57:42', 100000.00, 'pending'),
+(3, 1, '2025-01-01 02:57:42', 250000.00, 'pending'),
+(4, 1, '2025-02-01 06:57:42', 115000.00, 'pending'),
+(5, 1, '2025-03-08 00:17:42', 445000.00, 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -226,6 +231,22 @@ CREATE TABLE `order_items` (
   `quantity` int(11) NOT NULL,
   `price_each` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `flower_id`, `quantity`, `price_each`) VALUES
+(1, 2, 1, 2, 50000.00),
+(2, 3, 1, 2, 50000.00),
+(3, 3, 2, 2, 90000.00),
+(4, 3, 3, 1, 60000.00),
+(5, 4, 3, 1, 60000.00),
+(6, 4, 5, 2, 30000.00),
+(7, 4, 6, 1, 25000.00),
+(8, 5, 4, 3, 80000.00),
+(9, 5, 7, 2, 70000.00),
+(10, 5, 9, 1, 65000.00);
 
 -- --------------------------------------------------------
 
@@ -242,6 +263,16 @@ CREATE TABLE `payments` (
   `payment_status` enum('pending','completed','failed') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `order_id`, `payment_method`, `payment_date`, `amount`, `payment_status`) VALUES
+(1, 2, '', '2025-05-13 15:04:07', 100000.00, 'completed'),
+(2, 3, '', '2025-01-01 02:57:42', 250000.00, 'completed'),
+(3, 4, '', '2025-02-01 06:57:42', 115000.00, 'completed'),
+(4, 5, '', '2025-03-08 00:17:42', 445000.00, 'completed');
+
 -- --------------------------------------------------------
 
 --
@@ -256,6 +287,13 @@ CREATE TABLE `refund_requests` (
   `status` enum('pending','approved','rejected') DEFAULT 'pending',
   `request_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `refund_requests`
+--
+
+INSERT INTO `refund_requests` (`refund_id`, `order_id`, `customer_id`, `reason`, `status`, `request_date`) VALUES
+(3, 2, 1, 'The flowers are in bad condition', 'approved', '2025-05-14 05:23:33');
 
 -- --------------------------------------------------------
 
@@ -286,7 +324,15 @@ CREATE TABLE `staff` (
   `phone` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-<<<<<<< HEAD
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`staff_id`, `account_id`, `full_name`, `position`, `phone`) VALUES
+(1, 2, 'Johny Sin', 'local-staff', '0323456112'),
+(3, 9, 'Eimi HaHaHa', 'local-staff', '09832123445'),
+(4, 10, 'ToiLaConMeo', 'local-staff', '07781236663');
+
 -- --------------------------------------------------------
 
 --
@@ -304,13 +350,10 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`wishlist_id`, `account_id`, `flower_id`) VALUES
-(10, 1, 5),
-(11, 1, 6),
-(13, 1, 2),
-(18, 1, 1);
+(20, 6, 3),
+(24, 1, 5),
+(25, 1, 1);
 
-=======
->>>>>>> login
 --
 -- Indexes for dumped tables
 --
@@ -330,7 +373,6 @@ ALTER TABLE `albums`
   ADD PRIMARY KEY (`album_id`);
 
 --
-<<<<<<< HEAD
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
@@ -352,8 +394,6 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
-=======
->>>>>>> login
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -364,12 +404,8 @@ ALTER TABLE `customers`
 -- Indexes for table `flowers`
 --
 ALTER TABLE `flowers`
-<<<<<<< HEAD
   ADD PRIMARY KEY (`flower_id`),
   ADD KEY `category_id` (`category_id`);
-=======
-  ADD PRIMARY KEY (`flower_id`);
->>>>>>> login
 
 --
 -- Indexes for table `flower_album`
@@ -425,7 +461,6 @@ ALTER TABLE `staff`
   ADD KEY `account_id` (`account_id`);
 
 --
-<<<<<<< HEAD
 -- Indexes for table `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -434,8 +469,6 @@ ALTER TABLE `wishlist`
   ADD KEY `flower_id` (`flower_id`);
 
 --
-=======
->>>>>>> login
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -443,11 +476,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-<<<<<<< HEAD
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-=======
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> login
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `albums`
@@ -456,17 +485,16 @@ ALTER TABLE `albums`
   MODIFY `album_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
-<<<<<<< HEAD
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cart_item`
 --
 ALTER TABLE `cart_item`
-  MODIFY `cartitemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cartitemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -475,22 +503,16 @@ ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
-=======
->>>>>>> login
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `flowers`
 --
 ALTER TABLE `flowers`
-<<<<<<< HEAD
   MODIFY `flower_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-=======
-  MODIFY `flower_id` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> login
 
 --
 -- AUTO_INCREMENT for table `flower_album`
@@ -502,25 +524,25 @@ ALTER TABLE `flower_album`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `refund_requests`
 --
 ALTER TABLE `refund_requests`
-  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -532,23 +554,19 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
-<<<<<<< HEAD
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
-=======
->>>>>>> login
 -- Constraints for dumped tables
 --
 
 --
-<<<<<<< HEAD
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
@@ -562,23 +580,18 @@ ALTER TABLE `cart_item`
   ADD CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`flower_id`) REFERENCES `flowers` (`flower_id`);
 
 --
-=======
->>>>>>> login
 -- Constraints for table `customers`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE;
 
 --
-<<<<<<< HEAD
 -- Constraints for table `flowers`
 --
 ALTER TABLE `flowers`
   ADD CONSTRAINT `flowers_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 
 --
-=======
->>>>>>> login
 -- Constraints for table `flower_album`
 --
 ALTER TABLE `flower_album`
@@ -623,7 +636,6 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `staff`
   ADD CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE;
-<<<<<<< HEAD
 
 --
 -- Constraints for table `wishlist`
@@ -631,8 +643,6 @@ ALTER TABLE `staff`
 ALTER TABLE `wishlist`
   ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`flower_id`) REFERENCES `flowers` (`flower_id`) ON DELETE CASCADE;
-=======
->>>>>>> login
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
