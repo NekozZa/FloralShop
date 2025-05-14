@@ -7,8 +7,8 @@
             
             $sql = "
                 SELECT * 
-                FROM accounts
-                WHERE role = 'staff'
+                FROM staff
+                INNER JOIN accounts ON staff.account_id = accounts.account_id 
             ";
 
             $stmt = $conn->prepare($sql);
@@ -24,6 +24,19 @@
             $conn->close();
 
             return $staff;
+        }
+
+        public function remove_staff($staff_id) {
+            $conn = connect();
+
+            $sql = "
+                DELETE FROM staff
+                WHERE staff_id = ?
+            ";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $staff_id);
+            $stmt->execute();
         }
     }
 ?>
