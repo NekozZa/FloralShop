@@ -211,7 +211,7 @@
     <script src="js/custom.js"></script>
 
     <script src="public/js/cart_wishlist.js"></script>
-    <script src="public/js/index.js"></script>
+    <script src="public/js/index.js?v=2"></script>
     <link rel="stylesheet" href="css/animation.css">
 </body>
 

@@ -206,7 +206,7 @@
     <script src="js/custom.js"></script>
 
     <script src="public/js/cart_wishlist.js"></script>
-    <script src="public/js/shop.js"></script>
+    <script src="public/js/shop.js?v=4"></script>
     <link rel="stylesheet" href="css/animation.css">
 </body>
 
