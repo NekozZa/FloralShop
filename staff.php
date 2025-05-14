@@ -30,10 +30,10 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     >
 </head>
-<body style="height: 100vh">
+<body class="h-auto">
     <div class="container-fluid h-100">
         <div class="row flex-nowrap h-100">
-            <div class="bg-dark w-auto p-3 menu h-100">
+            <div class="bg-dark w-auto p-3 menu h-auto">
                 <span class="text-light">
                     STAFF
                     <i class="bi bi-list"></i>

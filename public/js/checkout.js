@@ -1,9 +1,5 @@
 async function placeOrder(accountID){
     const cartItems = await fetchCartItems();
-    // console.log(cartItems);
-    // if(cartItems.length === 0){
-    //     alert('Cannot place order.')
-    // }
     const totalAmount = parseFloat(document.getElementById('total').textContent.replace('$',''));
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     console.log('Payment Method:', paymentMethod);
@@ -80,9 +76,6 @@ function calculateSummary(items){
     let subtotal = 0;
     
     //Testing
-    let discount = 1000; 
-    let couponDiscount = 500; 
-    let tax = 20
     let shippingCost = 0;
     let grandtotal = 0
     let opt1 = document.getElementById('shippingOption1');
@@ -106,12 +99,12 @@ function calculateSummary(items){
         shippingCost = parseFloat(opt3.value);
     }
     
-    grandtotal = ((subtotal - discount -couponDiscount) + tax + shippingCost).toFixed(2);
+    grandtotal = ((subtotal + shippingCost)).toFixed(2);
     //Show UI
     document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
-    document.getElementById('coupon-discount').textContent = `$${couponDiscount.toFixed(2)}`;
-    document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+    // document.getElementById('discount').textContent = `$${discount.toFixed(2)}`;
+    // document.getElementById('coupon-discount').textContent = `$${couponDiscount.toFixed(2)}`;
+    // document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
     document.getElementById('shipping').textContent = shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`;
     document.getElementById('total').textContent = `$${grandtotal}`;
 }

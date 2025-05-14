@@ -150,12 +150,12 @@
                                     <label class="custom-control-label" for="paypal">Paypal</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" value="direct" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="paypal">Direct</label>
+                                    <input id="direct" name="paymentMethod" type="radio" value="direct" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="direct">Direct</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" value="bank_transfer" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="paypal">Bank Transfer</label>
+                                    <input id="bank_transfer" name="paymentMethod" type="radio" value="bank_transfer" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="bank_transfer">Bank Transfer</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -306,7 +306,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="public/js/checkout.js?v=7"></script>
+    <script src="public/js/checkout.js?v=10"></script>
 </body>
 
 </html>
