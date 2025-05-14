@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+
+    if (!isset($_GET['orderID'])) {
+        header('Location: index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -96,7 +104,7 @@
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     <div class="submit-button text-center">
-                                        <button class="btn hvr-hover" id="submit" type="button">Send Message</button>
+                                        <button class="btn hvr-hover" id="submit" type="button" onclick="sendRefund(<?= $_SESSION['customer_id'] ?>)">Send Message</button>
                                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -127,36 +135,6 @@
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
-    <script>
-        const form = document.querySelector('form')
-        const btn = document.querySelector('form button')
-        const requestType = document.querySelector('form select')
-        const requestReason = document.querySelector('form textarea')
-        const params = new URLSearchParams(document.location.search)
-        const orderID = parseInt(params.get('orderID', 10))
-
-        form.onsubmit = (e) => {
-            e.preventDefault()
-        } 
-
-        btn.onclick = async (e) => {
-            const formData = new FormData()
-            formData.append('type', requestType.value)
-            formData.append('reason', requestReason.value)
-            formData.append('orderID', orderID)
-
-            const res = await fetch('./controller/request_controller.php', {
-                method: 'POST',
-                body: formData
-            })
-
-            const data = await res.json()
-            console.log(data)
-        }
-
-
-    </script>
-
     <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -173,6 +151,39 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+    <script>
+        const form = document.querySelector('form')
+        const btn = document.querySelector('form button')
+        const requestType = document.querySelector('form select')
+        const requestReason = document.querySelector('form textarea')
+        const params = new URLSearchParams(document.location.search)
+        const orderID = parseInt(params.get('orderID', 10))
+
+        form.onsubmit = (e) => {
+            e.preventDefault()
+        } 
+        
+        async function sendRefund(customerID) {
+            const params = new URLSearchParams(window.location.search)
+            const formData = new FormData()
+            formData.append('order_id', params.get('orderID'))
+            formData.append('customer_id', customerID)
+            formData.append('reason', requestReason.value)
+            
+
+            const res = await fetch('./controller/request_controller.php', {
+                method: 'POST',
+                body: formData
+            })
+
+            const data = await res.json()
+            
+            if (data.code == 0) {
+                window.location.href = 'orders.php'
+            }
+        }
+    </script>
 </body>
 
 </html>

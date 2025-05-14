@@ -66,8 +66,8 @@
 
                     <div class='mt-3'>
                         <div class='d-flex justify-content-start text-secondary'>
-                            <a href="admin.php?type=order" class="order-menu">
-                                <i class="bi bi-box me-1"></i> Order Management
+                            <a href="admin.php?type=storage" class="order-menu">
+                                <i class="bi bi-box me-1"></i> Storage Management
                             </a>
                         </div>
                     </div>

@@ -15,7 +15,6 @@
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
                     <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                         <ul class="dropdown-menu">
@@ -25,7 +24,6 @@
                             <li><a href="wishlist.php">Wishlist</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -33,7 +31,6 @@
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
-                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu">
                         <a href="#" onclick="getCartSidebarItems()">
                             <i class="fa fa-shopping-bag"></i>

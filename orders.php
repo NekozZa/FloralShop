@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -81,41 +85,13 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>OrderID</th>
                                     <th>Product Name</th>
                                     <th>Amount </th>
                                     <th>Status</th>
-                                    <th>Track Order</th>
                                     <th>Refund</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        1
-                                    </td>
-
-                                    <td class="name-pr">
-                                        <ul style="list-style: square">
-                                            <li><a href="">- Golden Blossoms</a></li>
-                                            <li><a href="">- Rose</a></li>
-                                        </ul>
-                                    </td>
-                                    
-                                    <td class="price-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-
-                                    <td class="quantity-box">Purchased</td>
-
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="#">Track Order</a>
-                                    </td>
-
-                                    <td class="add-pr">
-                                        <a class="btn hvr-hover" href="./contact-us.php?orderID=1">Refund Order</a>
-                                    </td>
-                                </tr>
+                            <tbody data-customer="<?= $_SESSION['customer_id'] ?>">
                                 
                             </tbody>
                         </table>
@@ -159,6 +135,72 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+    <script>
+        const tbody = document.querySelector('tbody')
+
+        window.addEventListener('load', async () => {
+            const orders = await getOrders(tbody.dataset.customer)
+            let dict = {}
+
+            orders.forEach((order) => {
+                if (!dict[order.order_id]) {
+                    dict[order.order_id] = [order];
+                } else {
+                    dict[order.order_id].push(order);
+                }
+            })
+
+            console.log(dict)
+
+            for (const key in dict) {
+                const orderFlowers = createOrderFlowers(dict[key])
+                const tr = createOrder(dict[key][0], orderFlowers)
+                tbody.appendChild(tr)
+            }
+        })
+
+        function createOrder(orderInfo, orderFlowers) {
+            const tr = document.createElement('tr')
+            tr.innerHTML += `
+                <td class="name-pr">
+                    ${orderFlowers}
+                </td>
+
+                <td class="price-pr">
+                    <p>$${orderInfo.total_amount}</p>
+                </td>
+
+                <td class="quantity-box">${orderInfo.status}</td>
+
+                <td class="add-pr">
+                    <a class="btn hvr-hover" href="./contact-us.php?orderID=${orderInfo.order_id}">Refund Order</a>
+                </td>
+            `
+
+            return tr
+        }
+
+        function createOrderFlowers(orderItems) {
+            const ul = document.createElement('ul')
+            
+            orderItems.forEach(item => {
+                const li = document.createElement('li')
+                li.innerHTML= `<a href="">- ${item.name} x ${item.quantity}</a>`
+
+                ul.appendChild(li)
+            })
+
+            return ul.innerHTML
+        }
+
+        async function getOrders(customer_id) {
+            const res = await fetch(`./controller/order_controller.php?customer_id=${customer_id}`, { method: 'GET' })
+            const data = await res.json()
+            return data.return
+        }
+
+    </script>
 </body>
 
 </html>
