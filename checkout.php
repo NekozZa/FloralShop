@@ -1,5 +1,6 @@
 <?php
     session_start();
+    $account_id = $_SESSION['account_id'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
-
+    
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -137,12 +138,24 @@
                             <div class="title"> <span>Payment</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" value="bank-transfer" type="radio" class="custom-control-input" checked required>
-                                    <label class="custom-control-label" for="credit">Bank Transfer</label>
+                                    <input id="credit" name="paymentMethod" type="radio" value="credit_card" class="custom-control-input" checked required>
+                                    <label class="custom-control-label" for="credit">Credit card</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" value="direct-transfer" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="debit">Direct Transfer</label>
+                                    <input id="debit" name="paymentMethod" type="radio" value="debit" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="debit">Debit card</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" value="direct" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">Direct</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" value="bank_transfer" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">Bank Transfer</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -207,12 +220,55 @@
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <a href="checkout.html" class="ml-auto btn hvr-hover">Place Order</a> </div>
+                        <?php if ($account_id !== null):  ?>
+                        <div class="col-12 d-flex shopping-box"> 
+                            <a onclick="placeOrder(<?= $_SESSION  ['account_id']?>)" id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</a> 
+                        </div>
+                        <?php else: ?>
+                            <div class="col-12 d-flex shopping-box">
+                                <a href="index.php" class="ml-auto btn hvr-hover" >
+                                    Login
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-
         </div>
+    </div>
+
+    <!-- Modal Success -->
+    <div class="modal fade" id="orderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderSuccessModalLabel">Order Successful</h5>
+          </div>
+          <div class="modal-body">
+            <p>Your order has been placed successfully!</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Error -->
+    <div class="modal fade" id="orderErrorModal" tabindex="-1" role="dialog" aria-labelledby="orderErrorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title text-danger" id="orderErrorModalLabel">Order Failed</h5>
+          </div>
+          <div class="modal-body">
+            <p>There was an error placing your order. Please try again.</p>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- End Cart -->
 
@@ -250,7 +306,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="public/js/checkout.js"></script>
+    <script src="public/js/checkout.js?v=7"></script>
 </body>
 
 </html>

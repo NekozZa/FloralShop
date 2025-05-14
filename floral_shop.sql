@@ -151,6 +151,14 @@ INSERT INTO `customers` (`customer_id`, `account_id`, `full_name`, `phone`, `add
 (1, 7, 'alice', 'nguyen', '69 Mai Chí Thọ, Phường An Phú, Quận 2, Sài Gòn');
 
 -- --------------------------------------------------------
+--
+-- Dumping data for table `customers`
+--
+
+
+INSERT INTO customers (account_id, full_name, phone, address)
+VALUES (1, 'Bob Example', '1234567890', '123 Floral Street');
+
 
 --
 -- Table structure for table `flowers`
@@ -257,7 +265,7 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `flower_id`, `quantity`,
 CREATE TABLE `payments` (
   `payment_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `payment_method` enum('credit_card','paypal','bank_transfer') NOT NULL,
+  `payment_method` enum('credit_card','paypal','bank_transfer','direct','debit') NOT NULL,
   `payment_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `amount` decimal(10,2) NOT NULL,
   `payment_status` enum('pending','completed','failed') DEFAULT 'pending'
