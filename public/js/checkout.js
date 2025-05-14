@@ -5,6 +5,8 @@ async function placeOrder(accountID){
     //     alert('Cannot place order.')
     // }
     const totalAmount = parseFloat(document.getElementById('total').textContent.replace('$',''));
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    console.log('Payment Method:', paymentMethod);
     if (!cartItems || cartItems.length === 0) {
         $('#orderErrorModal').modal('show');
         return;
@@ -18,12 +20,14 @@ async function placeOrder(accountID){
             account_id: accountID,
             cart_items: cartItems,
             total_amount: totalAmount,
+            payment_method: paymentMethod,
         })
     })
     .then(response => response.json())
     .then(responseData =>{
         if(responseData.code === 0){
             $('#orderSuccessModal').modal('show');
+            fetchCartItems();
         }
         else{
             $('#orderErrorModal').modal('show');
@@ -33,6 +37,7 @@ async function placeOrder(accountID){
         console.log('Error:', error);
         $('#orderErrorModal').modal('show');
     })
+
 }
 
 async function fetchCartItems(){

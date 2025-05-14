@@ -3,9 +3,9 @@
     session_start();
     header('Content-Type: application/json');
     class OrderController {
-        public function place_order($account_id,$cart_items,$total_amount){
+        public function place_order($account_id,$cart_items,$total_amount,$payment_method){
             $order_model = new Order();
-            return $order_model->create_order($account_id,$cart_items,$total_amount);
+            return $order_model->create_order($account_id,$cart_items,$total_amount,$payment_method);
         }
     }
 
@@ -18,11 +18,12 @@
         $account_id = $_SESSION['account_id'];
         $cart_items = $input->cart_items ?? null;
         $total_amount = $input->total_amount ?? null;
-
+        $payment_method = $input->payment_method ?? null;
+        
         if($cart_items === null || $total_amount === null){
             response(1, 'Cart is empty');
         }
-        $result = $order_controller->place_order($account_id, $cart_items, $total_amount);
+        $result = $order_controller->place_order($account_id, $cart_items, $total_amount,$payment_method);
         if($result){
             response(0, 'Order placed successfully', $result);
         } else {

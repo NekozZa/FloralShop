@@ -223,7 +223,7 @@ CREATE TABLE `order_items` (
 CREATE TABLE `payments` (
   `payment_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `payment_method` enum('credit_card','paypal','bank_transfer') NOT NULL,
+  `payment_method` enum('credit_card','paypal','bank_transfer','direct','debit') NOT NULL,
   `payment_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `amount` decimal(10,2) NOT NULL,
   `payment_status` enum('pending','completed','failed') DEFAULT 'pending'

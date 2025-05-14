@@ -199,16 +199,24 @@
                             <div class="title"> <span>Payment</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                    <input id="credit" name="paymentMethod" type="radio" value="credit_card" class="custom-control-input" checked required>
                                     <label class="custom-control-label" for="credit">Credit card</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <input id="debit" name="paymentMethod" type="radio" value="debit" class="custom-control-input" required>
                                     <label class="custom-control-label" for="debit">Debit card</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <input id="paypal" name="paymentMethod" type="radio" value="paypal" class="custom-control-input" required>
                                     <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" value="direct" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">Direct</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" value="bank_transfer" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">Bank Transfer</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -334,9 +342,17 @@
                                 </div>
                                 <hr> </div>
                         </div>
+                        <?php if ($account_id !== null):  ?>
                         <div class="col-12 d-flex shopping-box"> 
-                            <button onclick="placeOrder(<?= $_SESSION  ['account_id']?>)" id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</button> 
+                            <a onclick="placeOrder(<?= $_SESSION  ['account_id']?>)" id="place-order-btn" class="ml-auto btn hvr-hover">Place Order</a> 
                         </div>
+                        <?php else: ?>
+                            <div class="col-12 d-flex shopping-box">
+                                <a href="index.php" class="ml-auto btn hvr-hover" >
+                                    Login
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -412,7 +428,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
 
-    <script src="public/js/checkout.js"></script>
+    <script src="public/js/checkout.js?v=7"></script>
     <script>
         
     </script>
