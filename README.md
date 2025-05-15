@@ -2,21 +2,16 @@
 ## Description
 This project helps mitigate management process for the shop owner and creates a captivating and digital interface for online customers. Moving the project to an online platform also helps expand the customer ranges and easily advertise it using online tools.
 
-# Project Overview
+## Project Overview
 ### Technologies
 - XAMPP (APACHE + PHP)
 - MySQL (Database)
 # Running Project
-## Clone from GitHub
-### Clone repository 
+### Clone from GitHub
 ```
 git clone https://github.com/NekozZa/MealsSuggestor.git
 ```
 ## Running project
-This project provides two types of accounts: the admin and the regular user.
-### Admin account
-- **Username**: admin
-- **Password**: admin123
 ## Test Accounts
 | Type | Username | Password |
 | --- | --- | --- |
