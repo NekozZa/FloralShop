@@ -8,6 +8,7 @@ Project link: [https://github.com/NekozZa/FloralShop](https://github.com/NekozZa
 BackEnd:
 - XAMPP (APACHE + PHP)
 - MySQL (Database)
+
 FrontEnd:
 - Javascript
 - CSS
