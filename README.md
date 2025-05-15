@@ -5,8 +5,13 @@ This project helps mitigate management process for the shop owner and creates a 
 Project link: [https://github.com/NekozZa/FloralShop](https://github.com/NekozZa/FloralShop)
 ## Project Overview
 ### Technologies
+BackEnd:
 - XAMPP (APACHE + PHP)
 - MySQL (Database)
+FrontEnd:
+- Javascript
+- CSS
+- HTML
 ## Running Project
 ### Clone from GitHub
 ```
