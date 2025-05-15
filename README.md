@@ -11,8 +11,7 @@ This project helps mitigate management process for the shop owner and creates a 
 ```
 git clone https://github.com/NekozZa/MealsSuggestor.git
 ```
-## Running project
-## Test Accounts
+### Test Accounts
 | Type | Username | Password |
 | --- | --- | --- |
 | Customer | alice | alice123 |
