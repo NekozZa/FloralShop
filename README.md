@@ -1,7 +1,8 @@
 # Floral Shop
 ## Description
 This project helps mitigate management process for the shop owner and creates a captivating and digital interface for online customers. Moving the project to an online platform also helps expand the customer ranges and easily advertise it using online tools.
-
+## GitHub
+Project link: [https://github.com/NekozZa/FloralShop](https://github.com/NekozZa/FloralShop)
 ## Project Overview
 ### Technologies
 - XAMPP (APACHE + PHP)
