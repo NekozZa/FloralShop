@@ -6,7 +6,7 @@ This project helps mitigate management process for the shop owner and creates a 
 ### Technologies
 - XAMPP (APACHE + PHP)
 - MySQL (Database)
-# Running Project
+## Running Project
 ### Clone from GitHub
 ```
 git clone https://github.com/NekozZa/MealsSuggestor.git
